@@ -138,5 +138,20 @@
         "hu": "Érvénytelen id",
         "en": "",
         "de": ""
+    },
+    "Successfully_Uploaded_File": {
+        "hu": "Sikeresen feltöltötted a fájlt",
+        "en": "",
+        "de": ""
+    },
+    "Invalid_Filename": {
+        "hu": "Érvénytelen fájl név",
+        "en": "",
+        "de": ""
+    },
+    "File_Not_Found": {
+        "hu": "Fájl nem található",
+        "en": "",
+        "de": ""
     }
 }
