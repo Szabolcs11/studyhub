@@ -11,6 +11,7 @@ import Course from "../pages/Course/Course";
 import Courses from "../pages/Courses/Courses";
 import Home from "../pages/Home/Home";
 import { PATHS } from "./Routes";
+import Settings from "../pages/Settings/Settings";
 
 export let navigator: any;
 export let setUserData: (user: any) => void;
@@ -62,6 +63,7 @@ function index() {
         <Route path={PATHS.HOME} element={<Home />} />
         <Route path={PATHS.COURSES} element={<Courses />} />
         <Route path={PATHS.COURSES + ":id"} element={<Course />} />
+        <Route path={PATHS.SETTINGS} element={<Settings />} />
       </Route>
       <Route path="*" element={<Navigate to={PATHS.HOME} />} />
     </Routes>
