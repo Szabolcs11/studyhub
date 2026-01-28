@@ -30,11 +30,6 @@ export const Middleware = (req: Request, res: Response, next: NextFunction) => {
 };
 
 function isAuthorizedOrigin(origin: string | undefined): boolean {
-  const authorizedOrigins = [
-    process.env.APPURL,
-    process.env.CONTROL_PANEL_URL,
-    process.env.ADMIN_PANEL_URL,
-    process.env.GAPE_PANEL_URL,
-  ];
+  const authorizedOrigins = [process.env.APP_URL];
   return authorizedOrigins.includes(origin);
 }
