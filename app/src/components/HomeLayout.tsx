@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
+import Layout from "./Layout";
 
 function HomeLayout() {
   return (
-    // <section>
-    <Outlet />
-    // </section>
+    <Layout>
+      <Outlet />
+    </Layout>
   );
 }
 

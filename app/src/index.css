@@ -1,6 +1,7 @@
 @import "./styles/auth.css";
 @import "./styles/courses.css";
 @import "./styles/courseDetail.css";
+@import "./styles/sidebar.css";
 
 #root {
   width: 100%;
