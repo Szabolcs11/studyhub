@@ -18,6 +18,17 @@ export interface Course {
   Description: string;
 }
 
+export interface Note {
+  Id: number;
+  CourseId: number;
+  Title: string;
+  AttachmentUrl: string;
+  Description: string;
+  UploaderUserId: number;
+  CreatedAt: string;
+  LastEdited?: string;
+}
+
 export interface CourseWithFaculty extends Course {
   Faculty: Faculty;
 }
@@ -28,4 +39,16 @@ export interface FacultyWithCourses extends Faculty {
 
 export interface UniversityWithFaculties extends University {
   Faculties: FacultyWithCourses[];
+}
+
+export interface CreateNoteRequest {
+  Title: string;
+  AttachmentUrl: string;
+  Description: string;
+}
+
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  message: string;
+  data?: T;
 }

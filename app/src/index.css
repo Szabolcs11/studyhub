@@ -1,5 +1,6 @@
 @import "./styles/auth.css";
 @import "./styles/courses.css";
+@import "./styles/courseDetail.css";
 
 #root {
   width: 100%;
