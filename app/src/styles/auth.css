@@ -54,10 +54,11 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 body {
@@ -66,7 +67,7 @@ body {
   line-height: 1.6;
   color: var(--color-text-primary);
   background-color: var(--color-background);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .auth-layout {
@@ -359,7 +360,7 @@ body {
   height: 4px;
   background: var(--color-border);
   border-radius: var(--radius-sm);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .password-strength-fill {

@@ -9,6 +9,7 @@ import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import Home from "../pages/Home/Home";
 import HomeLayout from "../components/HomeLayout";
+import Courses from "../pages/Courses/Courses";
 
 export let navigator: any;
 export let setUserData: (user: any) => void;
@@ -58,7 +59,9 @@ function index() {
       )}
       <Route element={<HomeLayout />}>
         <Route path={PATHS.HOME} element={<Home />} />
+        <Route path={PATHS.COURSES} element={<Courses />} />
       </Route>
+      <Route path="*" element={<Navigate to={PATHS.HOME} />} />
     </Routes>
   );
 }
