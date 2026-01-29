@@ -43,7 +43,7 @@ function Login() {
       );
 
       if (response.data.success) {
-        toast.success("Sikeres bejelentkezés!");
+        toast.success(response.data.message);
         navigate("/");
       } else {
         toast.error(response.data.message || "Bejelentkezési hiba történt");

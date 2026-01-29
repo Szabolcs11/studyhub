@@ -66,14 +66,13 @@ function Course() {
   return (
     <div className="course-detail-layout">
       <div className="course-detail-container">
-        {/* Course Information Section */}
         <section className="course-info-section">
           <div className="course-info-header">
-            <button className="course-back-button" onClick={() => window.history.back()} title="Vissza a kurzusokhoz">
+            {/* <button className="course-back-button" onClick={() => window.history.back()} title="Vissza a kurzusokhoz">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-            </button>
+            </button> */}
             <div className="course-info-content">
               <h1>{course.Name}</h1>
               <div className="subtitle">
@@ -141,7 +140,12 @@ function Course() {
           ) : (
             <div className="notes-list">
               {notes.map((note) => (
-                <div key={note.Id} className="note-card" onClick={() => navigator(PATHS.NOTES + note.Id)}>
+                <div
+                  key={note.Id}
+                  className="note-card"
+                  onClick={() => navigator(PATHS.NOTES + note.Id)}
+                  style={{ cursor: "pointer" }}
+                >
                   <div className="note-header">
                     <h3 className="note-title">{note.Title}</h3>
                     {isAuthenticated && (
