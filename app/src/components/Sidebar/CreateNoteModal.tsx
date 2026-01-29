@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import fileService from "../../services/fileService";
 
 interface CreateNoteModalProps {
   onClose: () => void;
@@ -12,6 +13,10 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ onClose, onSubmit, is
     description: "",
     attachmentUrl: "",
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -21,6 +26,67 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ onClose, onSubmit, is
     }));
   };
 
+  const handleFileSelect = (file: File) => {
+    if (file.size > 10 * 1024 * 1024) {
+      alert("A fájl mérete nem lehet nagyobb 10MB-nál!");
+      return;
+    }
+    setSelectedFile(file);
+    setFormData(prev => ({
+      ...prev,
+      attachmentUrl: ""
+    }));
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      handleFileSelect(file);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      handleFileSelect(file);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const removeFile = () => {
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const uploadFile = async (): Promise<string> => {
+    if (!selectedFile) {
+      return formData.attachmentUrl;
+    }
+
+    setIsUploading(true);
+    try {
+      const filename = await fileService.uploadFile(selectedFile);
+      return filename;
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -28,8 +94,22 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ onClose, onSubmit, is
       alert("A cím mező kötelező!");
       return;
     }
-    
-    await onSubmit(formData);
+
+    try {
+      let attachmentUrl = formData.attachmentUrl;
+      
+      if (selectedFile) {
+        attachmentUrl = await uploadFile();
+      }
+
+      await onSubmit({
+        ...formData,
+        attachmentUrl
+      });
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Hiba történt a jegyzet létrehozása közben";
+      alert(errorMessage);
+    }
   };
 
   return (
