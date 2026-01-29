@@ -153,5 +153,20 @@
         "hu": "Fájl nem található",
         "en": "",
         "de": ""
+    },
+    "Fill_The_Fields": {
+        "hu": "Töltsd ki a mezőket",
+        "en": "",
+        "de": ""
+    },
+    "Invalid_Password": {
+        "hu": "Hibák jelszó",
+        "en": "",
+        "de": ""
+    },
+    "Successfully_Changed_Password": {
+        "hu": "Sikeresen megváltoztattad a jelszavad",
+        "en": "",
+        "de": ""
     }
 }

@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 import responses from "../responses/errorResponses.json";
 import {
   authenticateUser,
+  checkPassword,
   destroySession,
   getUserByEmail,
   getUserByNickname,
   registerUser,
+  updatePassword,
 } from "../services/authService";
 import { language } from "../types";
 import { returnError } from "../utils";
@@ -72,5 +74,38 @@ export const authenticate = async (req: Request, res: Response) => {
   return res.status(200).json({
     success: true,
     user: user,
+  });
+};
+
+export const changePassword = async (req: Request, res: Response) => {
+  const language = (req.headers.language as language) || "hu";
+  const token = req.cookies?.sessiontoken;
+  const { CurrentPassword, NewPassword, NewPasswordConfirm } = req.body;
+
+  if (!CurrentPassword) return returnError(res, responses.Fill_The_Fields, language);
+  if (!NewPassword) return returnError(res, responses.Fill_The_Fields, language);
+  if (!NewPasswordConfirm) return returnError(res, responses.Fill_The_Fields, language);
+
+  if (NewPassword !== NewPasswordConfirm) return returnError(res, responses.Passwords_Do_Not_Match, language);
+
+  if (!token) {
+    return returnError(res, responses.You_Are_Not_Logged_In, language);
+  }
+
+  const user = await getUserBySessionToken(token);
+
+  if (!user) {
+    return returnError(res, responses.You_Are_Not_Logged_In, language);
+  }
+
+  const isCorrectPassword = await checkPassword(user.Id, CurrentPassword);
+  if (!isCorrectPassword) return returnError(res, responses.Invalid_Password, language);
+
+  const changed = await updatePassword(user.Id, NewPassword);
+  if (!changed) return returnError(res, responses.Unexpected_Error, language);
+
+  return res.status(200).json({
+    success: true,
+    message: responses.Successfully_Changed_Password[language],
   });
 };

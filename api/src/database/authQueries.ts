@@ -13,6 +13,12 @@ export const findUserByNickname = async (nickname: string): Promise<User | null>
   return result.length > 0 ? result[0] : null;
 };
 
+export const findUserById = async (id: number): Promise<User | null> => {
+  const [rows] = await pool.query("SELECT * FROM users WHERE Id = ?", [id]);
+  const result = rows as any[];
+  return result.length > 0 ? result[0] : null;
+};
+
 export const createSession = async (userID: number, token: string) => {
   await pool.execute("INSERT INTO sessions (UserID, Token) VALUES (?, ?)", [userID, token]);
 };
@@ -42,4 +48,9 @@ export const validateSessionToken = async (token: string) => {
   const [rows] = await pool.execute("SELECT * FROM sessions WHERE Token = ?", [token]);
   const result = rows as any[];
   return result.length > 0;
+};
+
+export const changePassword = async (id: number, hashedPassword: string) => {
+  const [result] = await pool.execute("UPDATE users SET Password = ? WHERE Id = ?", [hashedPassword, id]);
+  return result;
 };
