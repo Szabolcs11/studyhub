@@ -4,7 +4,7 @@ export let PATHS = {
 
   HOME: "/",
   COURSES: "/courses/",
-  NOTES: "/notes/",
+  NOTES: "/note/",
   NEW_NOTE: "/new_note/",
   SETTINGS: "/settings/",
 };

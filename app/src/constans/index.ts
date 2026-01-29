@@ -10,4 +10,6 @@ export const ENDPOINTS = {
   UNIVERSITY_FACULTIES: (id: number) => API_URL + `universities/${id}/faculties`,
   FACULTY_COURSES: (id: number) => API_URL + `faculties/${id}/courses`,
   COURSE_NOTES: (id: number) => API_URL + `courses/${id}/notes`,
+  NOTE: API_URL + `notes/`,
+  UPLOAD_FILE: API_URL + `files/upload`,
 };
