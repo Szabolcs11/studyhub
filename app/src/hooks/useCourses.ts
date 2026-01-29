@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import coursesService from "../services/coursesService";
 import { type UniversityWithFaculties } from "../types/courses";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ export const useCourses = () => {
   const [error, setError] = useState<string | null>(null);
   const [expandedUniversities, setExpandedUniversities] = useState<Set<number>>(new Set());
   const [expandedFaculties, setExpandedFaculties] = useState<Set<number>>(new Set());
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const fetchCourses = async () => {
     setIsLoading(true);
@@ -63,14 +64,80 @@ export const useCourses = () => {
     setExpandedFaculties(new Set());
   };
 
+  const searchFilter = (data: UniversityWithFaculties[], query: string): UniversityWithFaculties[] => {
+    if (!query.trim()) {
+      return data;
+    }
+
+    const normalizedQuery = query.toLowerCase().trim();
+
+    const filteredData: UniversityWithFaculties[] = [];
+    
+    for (const university of data) {
+      const universityMatches = university.Name.toLowerCase().includes(normalizedQuery) ||
+        (university.Description && university.Description.toLowerCase().includes(normalizedQuery));
+
+      const matchingFaculties = university.Faculties.filter((faculty) => {
+        const facultyMatches = faculty.Name.toLowerCase().includes(normalizedQuery) ||
+          (faculty.Description && faculty.Description.toLowerCase().includes(normalizedQuery));
+
+        const matchingCourses = faculty.Courses.filter((course) => 
+          course.Name.toLowerCase().includes(normalizedQuery) ||
+          (course.Description && course.Description.toLowerCase().includes(normalizedQuery))
+        );
+
+        return facultyMatches || matchingCourses.length > 0;
+      }).map((faculty) => {
+        const facultyMatches = faculty.Name.toLowerCase().includes(normalizedQuery) ||
+          (faculty.Description && faculty.Description.toLowerCase().includes(normalizedQuery));
+
+        const matchingCourses = faculty.Courses.filter((course) => 
+          course.Name.toLowerCase().includes(normalizedQuery) ||
+          (course.Description && course.Description.toLowerCase().includes(normalizedQuery))
+        );
+
+        return {
+          ...faculty,
+          Courses: facultyMatches ? faculty.Courses : matchingCourses
+        };
+      });
+
+      if (universityMatches || matchingFaculties.length > 0) {
+        filteredData.push({
+          ...university,
+          Faculties: universityMatches ? university.Faculties : matchingFaculties
+        });
+      }
+    }
+    
+    return filteredData;
+  };
+
+  const filteredUniversities = useMemo(() => {
+    return searchFilter(universities, searchQuery);
+  }, [universities, searchQuery]);
+
   useEffect(() => {
     fetchCourses();
   }, []);
 
+  // Auto-expand when searching
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      const allUniversityIds = filteredUniversities.map((u) => u.Id);
+      const allFacultyIds = filteredUniversities.flatMap((u) => u.Faculties.map((f) => f.Id));
+      setExpandedUniversities(new Set(allUniversityIds));
+      setExpandedFaculties(new Set(allFacultyIds));
+    }
+  }, [searchQuery, filteredUniversities]);
+
   return {
-    universities,
+    universities: filteredUniversities,
+    originalUniversities: universities,
     isLoading,
     error,
+    searchQuery,
+    setSearchQuery,
     expandedUniversities,
     expandedFaculties,
     toggleUniversity,

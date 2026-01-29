@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useCourses } from "../../hooks/useCourses";
 import { PATHS } from "../../navigator/Routes";
+import { SearchBar } from "../../components/SearchBar/SearchBar";
 
 function Courses() {
   const navigate = useNavigate();
   const {
     universities,
+    originalUniversities,
     isLoading,
     error,
+    searchQuery,
+    setSearchQuery,
     expandedUniversities,
     expandedFaculties,
     toggleUniversity,
@@ -28,6 +32,11 @@ function Courses() {
           <div className="courses-header">
             <h1 className="courses-title">Kurzusok</h1>
             <p className="courses-subtitle">Válassz egyetemet és tantárgyakat</p>
+            <SearchBar 
+              value={searchQuery} 
+              onChange={setSearchQuery}
+              disabled={isLoading}
+            />
           </div>
           <div className="courses-content">
             <div className="loading-container">
@@ -48,6 +57,10 @@ function Courses() {
           <div className="courses-header">
             <h1 className="courses-title">Kurzusok</h1>
             <p className="courses-subtitle">Válassz egyetemet és tantárgyakat</p>
+            <SearchBar 
+              value={searchQuery} 
+              onChange={setSearchQuery}
+            />
           </div>
           <div className="courses-content">
             <div className="error-container">
@@ -71,31 +84,71 @@ function Courses() {
     );
   }
 
-  if (universities.length === 0) {
-    return (
-      <div className="courses-layout">
-        <div className="courses-container">
-          <div className="courses-header">
-            <h1 className="courses-title">Kurzusok</h1>
-            <p className="courses-subtitle">Válassz egyetemet és tantárgyakat</p>
-          </div>
-          <div className="courses-content">
-            <div className="empty-container">
-              <svg className="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                />
-              </svg>
-              <div className="empty-title">Nem található kurzus</div>
-              <div className="empty-message">Jelenleg nincsenek elérhető kurzusok a rendszerben.</div>
+  if (universities.length === 0 && !isLoading && !error) {
+    if (searchQuery) {
+      return (
+        <div className="courses-layout">
+          <div className="courses-container">
+            <div className="courses-header">
+              <h1 className="courses-title">Kurzusok</h1>
+              <p className="courses-subtitle">
+                {originalUniversities.reduce(
+                  (acc, uni) => acc + uni.Faculties.reduce((facAcc, fac) => facAcc + fac.Courses.length, 0),
+                  0,
+                )}{" "}
+                kurzus {originalUniversities.length} egyetemen
+              </p>
+              <SearchBar 
+                value={searchQuery} 
+                onChange={setSearchQuery}
+              />
+              <div className="search-result-count">Nincs találat</div>
+            </div>
+            <div className="courses-content">
+              <div className="no-results">
+                <svg className="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <div className="no-results-title">Nincs találat</div>
+                <div className="no-results-message">
+                  "{searchQuery}" kifejezésre nem található egyetem, kar vagy kurzus.
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="courses-layout">
+          <div className="courses-container">
+            <div className="courses-header">
+              <h1 className="courses-title">Kurzusok</h1>
+              <p className="courses-subtitle">Válassz egyetemet és tantárgyakat</p>
+            </div>
+            <div className="courses-content">
+              <div className="empty-container">
+                <svg className="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  />
+                </svg>
+                <div className="empty-title">Nem található kurzus</div>
+                <div className="empty-message">Jelenleg nincsenek elérhető kurzusok a rendszerben.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 
   return (
@@ -104,12 +157,23 @@ function Courses() {
         <div className="courses-header">
           <h1 className="courses-title">Kurzusok</h1>
           <p className="courses-subtitle">
-            {universities.reduce(
+            {originalUniversities.reduce(
               (acc, uni) => acc + uni.Faculties.reduce((facAcc, fac) => facAcc + fac.Courses.length, 0),
               0,
             )}{" "}
-            kurzus {universities.length} egyetemen
+            kurzus {originalUniversities.length} egyetemen
           </p>
+          <SearchBar 
+            value={searchQuery} 
+            onChange={setSearchQuery}
+          />
+          {searchQuery && (
+            <div className="search-result-count">
+              {universities.length === 0 
+                ? "Nincs találat" 
+                : `${universities.length} egyetem található`}
+            </div>
+          )}
           <div className="courses-controls">
             <button className="control-button" onClick={expandAll}>
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,7 +202,7 @@ function Courses() {
               const totalCourses = university.Faculties.reduce((acc, faculty) => acc + faculty.Courses.length, 0);
 
               return (
-                <div key={university.Id} className="tree-item">
+                <div key={university.Id} className={`tree-item ${searchQuery ? 'search-highlight' : ''}`}>
                   <div className="tree-header" onClick={() => toggleUniversity(university.Id)}>
                     <div className="tree-header-content">
                       <svg
@@ -173,7 +237,7 @@ function Courses() {
                           const isFacultyExpanded = expandedFaculties.has(faculty.Id);
 
                           return (
-                            <div key={faculty.Id} className="tree-item">
+                            <div key={faculty.Id} className={`tree-item ${searchQuery ? 'search-highlight' : ''}`}>
                               <div
                                 className="tree-header"
                                 onClick={() => toggleFaculty(faculty.Id)}
