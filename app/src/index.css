@@ -2,6 +2,7 @@
 @import "./styles/courses.css";
 @import "./styles/courseDetail.css";
 @import "./styles/sidebar.css";
+@import "./pages/Home/Home.css";
 
 #root {
   width: 100%;

@@ -13,6 +13,16 @@ class NotesService {
     }
   }
 
+  async getNotes(): Promise<Note[] | null> {
+    try {
+      const response = await axios.get(`${API_URL}notes/`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching notes", error);
+      return null;
+    }
+  }
+
   async getNote(noteId: number): Promise<Note | null> {
     try {
       const response = await axios.get(`${API_URL}notes/${noteId}`);

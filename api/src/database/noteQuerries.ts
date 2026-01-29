@@ -4,7 +4,7 @@ import { pool } from "./mysql";
 
 export const noteQuerry = {
   async getAll(): Promise<Faculty[]> {
-    const [rows] = await pool.query("SELECT * FROM notes");
+    const [rows] = await pool.query("SELECT * FROM notes ORDER BY CreatedAT DESC");
     return rows as Faculty[];
   },
 
