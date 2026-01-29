@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useCourseDetail } from "../../hooks/useCourseDetail";
 import CreateNoteModal from "./Components/CreateNoteModal";
+import { navigator } from "../../navigator";
+import { PATHS } from "../../navigator/Routes";
 
 function Course() {
   const {
@@ -139,7 +141,7 @@ function Course() {
           ) : (
             <div className="notes-list">
               {notes.map((note) => (
-                <div key={note.Id} className="note-card">
+                <div key={note.Id} className="note-card" onClick={() => navigator(PATHS.NOTES + note.Id)}>
                   <div className="note-header">
                     <h3 className="note-title">{note.Title}</h3>
                     {isAuthenticated && (
