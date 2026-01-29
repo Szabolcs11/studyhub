@@ -105,68 +105,78 @@
         "de": "Ein unerwarteter Fehler ist aufgetreten!"
     },
     "You_Need_To_Login_To_Use_This_Function": {
-        "hu": "Be kell jelentkezned, hogy használd ezt a funkciót"
+        "hu": "Be kell jelentkezned, hogy használd ezt a funkciót",
+        "en": "You need to log in to use this function",
+        "de": "Du musst dich anmelden, um diese Funktion zu nutzen"
     },
     "No_University_Found": {
-        "hu": "Nem található egyetem az adott Id-vel"
+        "hu": "Nem található egyetem az adott Id-vel",
+        "en": "No university found with the given ID",
+        "de": "Keine Universität mit der angegebenen ID gefunden"
     },
     "No_Faculity_Found": {
-        "hu": "Nem található kar az adott Id-vel"
+        "hu": "Nem található kar az adott Id-vel",
+        "en": "No faculty found with the given ID",
+        "de": "Keine Fakultät mit der angegebenen ID gefunden"
     },
     "No_Course_Found": {
-        "hu": "Nem található szak az adott Id-vel"
+        "hu": "Nem található szak az adott Id-vel",
+        "en": "No course found with the given ID",
+        "de": "Kein Studiengang mit der angegebenen ID gefunden"
     },
     "No_Note_Found": {
-        "hu": "Nem található jegyzet az adott Id-vel"
+        "hu": "Nem található jegyzet az adott Id-vel",
+        "en": "No note found with the given ID",
+        "de": "Keine Notiz mit der angegebenen ID gefunden"
     },
     "Successfully_Created_Note": {
         "hu": "Sikeresen létrehoztad a jegyzetet",
-        "en": "",
-        "de": ""
+        "en": "Note created successfully",
+        "de": "Notiz erfolgreich erstellt"
     },
     "Successfully_Deleted_Note": {
         "hu": "Sikeresen törölted a jegyzetet",
-        "en": "",
-        "de": ""
+        "en": "Note deleted successfully",
+        "de": "Notiz erfolgreich gelöscht"
     },
     "Successfully_Edited_Note": {
         "hu": "Sikeresen módosítottad a jegyzetet",
-        "en": "",
-        "de": ""
+        "en": "Note updated successfully",
+        "de": "Notiz erfolgreich bearbeitet"
     },
     "Invalid_Id": {
         "hu": "Érvénytelen id",
-        "en": "",
-        "de": ""
+        "en": "Invalid ID",
+        "de": "Ungültige ID"
     },
     "Successfully_Uploaded_File": {
         "hu": "Sikeresen feltöltötted a fájlt",
-        "en": "",
-        "de": ""
+        "en": "File uploaded successfully",
+        "de": "Datei erfolgreich hochgeladen"
     },
     "Invalid_Filename": {
         "hu": "Érvénytelen fájl név",
-        "en": "",
-        "de": ""
+        "en": "Invalid file name",
+        "de": "Ungültiger Dateiname"
     },
     "File_Not_Found": {
         "hu": "Fájl nem található",
-        "en": "",
-        "de": ""
+        "en": "File not found",
+        "de": "Datei nicht gefunden"
     },
     "Fill_The_Fields": {
         "hu": "Töltsd ki a mezőket",
-        "en": "",
-        "de": ""
+        "en": "Please fill in all fields",
+        "de": "Bitte fülle alle Felder aus"
     },
     "Invalid_Password": {
         "hu": "Hibák jelszó",
-        "en": "",
-        "de": ""
+        "en": "Invalid password",
+        "de": "Ungültiges Passwort"
     },
     "Successfully_Changed_Password": {
         "hu": "Sikeresen megváltoztattad a jelszavad",
-        "en": "",
-        "de": ""
+        "en": "Password changed successfully",
+        "de": "Passwort erfolgreich geändert"
     }
 }
