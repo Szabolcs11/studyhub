@@ -7,12 +7,11 @@ import { toast } from "react-toastify";
 
 interface SidebarProps {
   isCollapsed?: boolean;
-  onToggle?: () => void;
   isMobileOpen?: boolean;
   onMobileClose?: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle, isMobileOpen = false, onMobileClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, isMobileOpen = false, onMobileClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -51,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle, isMobi
 
   const handleCreateNote = () => {
     if (!isAuthenticated) {
-      navigate("/login");
+      navigate("/auth/login");
       return;
     }
     setShowCreateModal(true);
@@ -148,7 +147,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle, isMobi
             </button>
           </div>
 
-          {isAuthenticated && (
+          {isAuthenticated ? (
             <div className="nav-section">
               <div className="nav-section-title">Fiók</div>
 
@@ -177,6 +176,56 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle, isMobi
                 </span>
                 <span className="nav-text">Kijelentkezés</span>
               </button>
+            </div>
+          ) : (
+            <div className="nav-section">
+              <div className="nav-section-title">Fiók</div>
+
+              <Link
+                to="/auth/login"
+                className="nav-item nav-auth-button login-button"
+                data-tooltip={isCollapsed ? "Bejelentkezés" : undefined}
+                onClick={() => {
+                  if (isMobileOpen && onMobileClose) {
+                    onMobileClose();
+                  }
+                }}
+              >
+                <span className="nav-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                    />
+                  </svg>
+                </span>
+                <span className="nav-text">Bejelentkezés</span>
+              </Link>
+
+              <Link
+                to="/auth/register"
+                className="nav-item nav-auth-button register-button"
+                data-tooltip={isCollapsed ? "Regisztráció" : undefined}
+                onClick={() => {
+                  if (isMobileOpen && onMobileClose) {
+                    onMobileClose();
+                  }
+                }}
+              >
+                <span className="nav-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                    />
+                  </svg>
+                </span>
+                <span className="nav-text">Regisztráció</span>
+              </Link>
             </div>
           )}
         </div>

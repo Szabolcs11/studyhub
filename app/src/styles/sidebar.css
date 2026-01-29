@@ -315,6 +315,55 @@ body {
   display: none;
 }
 
+/* Authentication Buttons */
+.nav-auth-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-sidebar-text);
+  transition: all var(--transition-base);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-2);
+}
+
+.nav-auth-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateX(2px);
+}
+
+.login-button {
+  border-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+  color: white;
+}
+
+.login-button:hover {
+  background: linear-gradient(135deg, var(--color-primary-hover), #1d4ed8);
+  transform: translateX(2px) translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.register-button {
+  border-color: var(--color-success);
+  color: white;
+  background: linear-gradient(135deg, var(--color-success), #059669);
+}
+
+.register-button:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateX(2px) translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.sidebar.collapsed .nav-auth-button {
+  padding: var(--spacing-2);
+  justify-content: center;
+}
+
+.sidebar.collapsed .nav-auth-button .nav-text {
+  display: none;
+}
+
 .sidebar-footer {
   padding: var(--spacing-4);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
