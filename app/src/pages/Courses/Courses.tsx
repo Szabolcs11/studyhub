@@ -32,11 +32,7 @@ function Courses() {
           <div className="courses-header">
             <h1 className="courses-title">Kurzusok</h1>
             <p className="courses-subtitle">Válassz egyetemet és tantárgyakat</p>
-            <SearchBar 
-              value={searchQuery} 
-              onChange={setSearchQuery}
-              disabled={isLoading}
-            />
+            <SearchBar value={searchQuery} onChange={setSearchQuery} disabled={isLoading} />
           </div>
           <div className="courses-content">
             <div className="loading-container">
@@ -57,10 +53,7 @@ function Courses() {
           <div className="courses-header">
             <h1 className="courses-title">Kurzusok</h1>
             <p className="courses-subtitle">Válassz egyetemet és tantárgyakat</p>
-            <SearchBar 
-              value={searchQuery} 
-              onChange={setSearchQuery}
-            />
+            <SearchBar value={searchQuery} onChange={setSearchQuery} />
           </div>
           <div className="courses-content">
             <div className="error-container">
@@ -98,10 +91,7 @@ function Courses() {
                 )}{" "}
                 kurzus {originalUniversities.length} egyetemen
               </p>
-              <SearchBar 
-                value={searchQuery} 
-                onChange={setSearchQuery}
-              />
+              <SearchBar value={searchQuery} onChange={setSearchQuery} />
               <div className="search-result-count">Nincs találat</div>
             </div>
             <div className="courses-content">
@@ -163,15 +153,10 @@ function Courses() {
             )}{" "}
             kurzus {originalUniversities.length} egyetemen
           </p>
-          <SearchBar 
-            value={searchQuery} 
-            onChange={setSearchQuery}
-          />
+          <SearchBar value={searchQuery} onChange={setSearchQuery} />
           {searchQuery && (
             <div className="search-result-count">
-              {universities.length === 0 
-                ? "Nincs találat" 
-                : `${universities.length} egyetem található`}
+              {universities.length === 0 ? "Nincs találat" : `${universities.length} egyetem található`}
             </div>
           )}
           <div className="courses-controls">
@@ -202,7 +187,7 @@ function Courses() {
               const totalCourses = university.Faculties.reduce((acc, faculty) => acc + faculty.Courses.length, 0);
 
               return (
-                <div key={university.Id} className={`tree-item ${searchQuery ? 'search-highlight' : ''}`}>
+                <div key={university.Id} className={`tree-item ${searchQuery ? "search-highlight" : ""}`}>
                   <div className="tree-header" onClick={() => toggleUniversity(university.Id)}>
                     <div className="tree-header-content">
                       <svg
@@ -237,7 +222,7 @@ function Courses() {
                           const isFacultyExpanded = expandedFaculties.has(faculty.Id);
 
                           return (
-                            <div key={faculty.Id} className={`tree-item ${searchQuery ? 'search-highlight' : ''}`}>
+                            <div key={faculty.Id} className={`tree-item ${searchQuery ? "search-highlight" : ""}`}>
                               <div
                                 className="tree-header"
                                 onClick={() => toggleFaculty(faculty.Id)}
@@ -285,7 +270,10 @@ function Courses() {
                                         className="course-item"
                                         onClick={() => handleCourseClick(course.Id, course.Name)}
                                       >
-                                        <div className="course-info">
+                                        <div
+                                          className="course-info"
+                                          style={{ flexDirection: "column", alignItems: "flex-start" }}
+                                        >
                                           <div className="course-name">{course.Name}</div>
                                           {course.Description && (
                                             <div className="course-description">{course.Description}</div>

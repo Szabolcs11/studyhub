@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar/Sidebar';
+import React, { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
 
 const Layout: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -14,11 +14,11 @@ const Layout: React.FC = () => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize(); // Check on mount
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -30,43 +30,33 @@ const Layout: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      if (window.innerWidth <= 1024 && 
-          !target.closest('.sidebar') && 
-          !target.closest('.mobile-menu-toggle')) {
+      if (window.innerWidth <= 1024 && !target.closest(".sidebar") && !target.closest(".mobile-menu-toggle")) {
         setIsMobileOpen(false);
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   return (
     <div className="app-layout">
-      <Sidebar 
+      <Sidebar
         isCollapsed={isCollapsed}
         onToggle={() => setIsCollapsed(!isCollapsed)}
         isMobileOpen={isMobileOpen}
         onMobileClose={handleMobileClose}
       />
-      
-      <main className="main-content">
-        {/* Mobile menu toggle */}
-        <button 
-          className="mobile-menu-toggle"
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-        >
+
+      <main className={`main-content ${isCollapsed ? "sidebar-collapsed" : ""}`}>
+        <button className="mobile-menu-toggle" onClick={() => setIsMobileOpen(!isMobileOpen)}>
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
 
-        {/* Mobile overlay */}
-        {isMobileOpen && (
-          <div className="mobile-overlay" onClick={handleMobileClose} />
-        )}
+        {isMobileOpen && <div className="mobile-overlay" onClick={handleMobileClose} />}
 
-        {/* Page content */}
         <div className="content-wrapper">
           <Outlet />
         </div>

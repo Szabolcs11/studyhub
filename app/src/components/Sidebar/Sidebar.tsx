@@ -113,13 +113,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle, isMobi
             <div className="sidebar-logo-icon">SH</div>
             <span className="sidebar-logo-text">StudyHub</span>
           </Link>
-          {onToggle && (
-            <button className="sidebar-toggle" onClick={onToggle}>
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-              </svg>
-            </button>
-          )}
         </div>
 
         <div className="sidebar-nav">
