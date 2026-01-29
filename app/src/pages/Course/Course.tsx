@@ -116,7 +116,7 @@ function Course() {
                 Új jegyzet
               </button>
             ) : (
-              <p>nem</p>
+              <></>
             )}
           </div>
 

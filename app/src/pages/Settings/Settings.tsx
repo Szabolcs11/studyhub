@@ -4,6 +4,8 @@ import { ENDPOINTS } from "../../constans";
 import { toast } from "react-toastify";
 import "./Settings.css";
 import type { User } from "../../types/courses";
+import { navigator } from "../../navigator";
+import { PATHS } from "../../navigator/Routes";
 
 interface FormData {
   currentPassword: string;
@@ -23,6 +25,9 @@ type SettingsProps = {
 };
 
 function Settings({ user }: SettingsProps) {
+  if (!user) {
+    navigator(PATHS.LOGIN);
+  }
   const [formData, setFormData] = useState<FormData>({
     currentPassword: "",
     newPassword: "",
