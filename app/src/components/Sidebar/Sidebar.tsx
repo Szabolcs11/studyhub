@@ -189,21 +189,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, onToggle, isMobi
         </div>
       </nav>
 
-      {/* Create Note Modal */}
       {showCreateModal && (
-        <div className="create-note-modal-overlay" onClick={() => setShowCreateModal(false)}>
-          <div className="create-note-modal" onClick={(e) => e.stopPropagation()}>
-            <CreateNoteModal
-              onClose={() => setShowCreateModal(false)}
-              onSubmit={async () => {
-                // For now, just show success and close
-                alert("Jegyzet létrehozva! (Ez csak egy demo funkció)");
-                setShowCreateModal(false);
-              }}
-              isLoading={false}
-            />
-          </div>
-        </div>
+        <CreateNoteModal onClose={() => setShowCreateModal(false)} onSubmit={() => {}} isLoading={false} />
       )}
     </>
   );
