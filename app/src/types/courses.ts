@@ -52,3 +52,12 @@ export interface ApiResponse<T = unknown> {
   message: string;
   data?: T;
 }
+
+export interface User {
+  Id: number;
+  Nickname: string;
+  Email: string;
+  Password: string;
+  CreatedAt: string;
+  LastLogin: string;
+}

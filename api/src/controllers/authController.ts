@@ -7,6 +7,7 @@ import {
   getUserByEmail,
   getUserByNickname,
   registerUser,
+  updateLastLogin,
   updatePassword,
 } from "../services/authService";
 import { language } from "../types";
@@ -38,6 +39,8 @@ export const login = async (req: Request, res: Response) => {
 
   const sessionToken = await authenticateUser(Email, Password);
   if (!sessionToken) return returnError(res, responses.Invalid_Username_Or_Password, language);
+
+  await updateLastLogin(Email);
 
   res.cookie(COOKIE_NAMES.SESSION, sessionToken, {
     httpOnly: true,

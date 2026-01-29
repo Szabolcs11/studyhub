@@ -3,6 +3,7 @@
 @import "./styles/courseDetail.css";
 @import "./styles/sidebar.css";
 @import "./pages/Home/Home.css";
+@import "./pages/Settings/Settings.css";
 
 #root {
   width: 100%;

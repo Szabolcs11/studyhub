@@ -12,4 +12,5 @@ export const ENDPOINTS = {
   COURSE_NOTES: (id: number) => API_URL + `courses/${id}/notes`,
   NOTE: API_URL + `notes/`,
   UPLOAD_FILE: API_URL + `files/upload`,
+  CHANGE_PASSWORD: API_URL + "auth/changepassword",
 };

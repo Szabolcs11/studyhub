@@ -38,7 +38,7 @@ export const createUser = async (nickname: string, password: string, email: stri
 
 export const getUserBySessionToken = async (token: string) => {
   const [rows] = await pool.execute(
-    "SELECT users.Id, users.Nickname FROM users JOIN sessions ON users.Id = sessions.UserId WHERE sessions.Token = ?",
+    "SELECT users.Id, users.Nickname, users.Email, users.LastLogin, users.CreatedAt FROM users JOIN sessions ON users.Id = sessions.UserId WHERE sessions.Token = ?",
     [token],
   );
   return (rows as any[])[0] || null;
@@ -52,5 +52,10 @@ export const validateSessionToken = async (token: string) => {
 
 export const changePassword = async (id: number, hashedPassword: string) => {
   const [result] = await pool.execute("UPDATE users SET Password = ? WHERE Id = ?", [hashedPassword, id]);
+  return result;
+};
+
+export const changeLastLogin = async (email: string) => {
+  const [result] = await pool.execute("UPDATE users SET LastLogin = NOW() WHERE Email = ?", [email]);
   return result;
 };

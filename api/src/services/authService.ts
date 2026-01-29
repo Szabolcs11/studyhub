@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import {
+  changeLastLogin,
   changePassword,
   createSession,
   createUser,
@@ -47,7 +48,10 @@ export const checkPassword = async (id: number, password: string) => {
 };
 
 export const updatePassword = async (id: number, newPassword: string) => {
-  console.log("newpass", newPassword);
   const hashedPassword = await bcrypt.hash(newPassword, 10);
   return await changePassword(id, hashedPassword);
+};
+
+export const updateLastLogin = async (email: string) => {
+  return await changeLastLogin(email);
 };

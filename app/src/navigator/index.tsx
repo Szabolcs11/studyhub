@@ -13,6 +13,7 @@ import Home from "../pages/Home/Home";
 import NotePage from "../pages/Note/NotePage";
 import Settings from "../pages/Settings/Settings";
 import { PATHS } from "./Routes";
+import type { User } from "../types/courses";
 
 export let navigator: any;
 export let setUserData: (user: any) => void;
@@ -20,13 +21,13 @@ export let isUserLoggined: boolean;
 
 function index() {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
 
   navigator = useNavigate();
   isUserLoggined = !user ? false : true;
 
   setUserData = (user) => {
-    setUser(user);
+    setUser(user as User);
   };
 
   useEffect(() => {
@@ -65,7 +66,7 @@ function index() {
         <Route path={PATHS.COURSES} element={<Courses />} />
         <Route path={PATHS.COURSES + ":id"} element={<Course />} />
         <Route path={PATHS.NOTES + ":id"} element={<NotePage />} />
-        <Route path={PATHS.SETTINGS} element={<Settings />} />
+        <Route path={PATHS.SETTINGS} element={<Settings user={user!} />} />
       </Route>
       <Route path="*" element={<Navigate to={PATHS.HOME} />} />
     </Routes>
