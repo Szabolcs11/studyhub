@@ -217,3 +217,14 @@ Az API alap URL‑je: `http://localhost:2004/api`
 | GET              | `/avatars/:filename` | Avatar kép lekérése                        |
 
 Részletesebb dokumentációhoz lásd a forráskódban az egyes route fájlokat.
+
+## AI használata a fejlesztésben
+
+A StudyHub projekt során mesterséges intelligencia eszközöket alkalmaztunk a fejlesztési folyamat gyorsítására és a kódminőség javítására. Az AI segítségével a következő területeken kaptunk támogatást:
+
+- **Kódgenerálás**: Egyes modulok (például adatbázis lekérdezések, service réteg) vázlatának elkészítése
+- **Hibakeresés**: Komplexebb logikai hibák azonosítása és javaslatok a javításukra
+- **Dokumentáció**: A README és az egyes funkciók leírásának összeállítása
+- **Tervezés**: Architektúrai döntések megvitatása és alternatívák értékelése
+
+Az AI eszközök (például ChatGPT, GitHub Copilot) lehetővé tették, hogy a fejlesztői erőforrások hatékonyabban legyenek kihasználva, és a projekt gyorsabban érettségét érje. Természetesen a generált kódot mindig átnéztük, teszteltük és igazítottuk a projekt specifikus igényeihez.
