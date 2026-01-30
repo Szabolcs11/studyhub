@@ -9,7 +9,7 @@ export const getNotes = async (req: Request, res: Response) => {
     const notes = await notesService.getAllNotes();
     return res.json(notes);
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 
@@ -19,7 +19,7 @@ export const getNote = async (req: Request, res: Response) => {
     const note = await notesService.getNote(id);
     return res.json(note);
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 
@@ -37,7 +37,7 @@ export const createNote = async (req: Request, res: Response) => {
       noteId: noteId,
     });
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 
@@ -57,7 +57,7 @@ export const deleteNote = async (req: Request, res: Response) => {
       });
     }
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 
@@ -80,6 +80,6 @@ export const editNode = async (req: Request, res: Response) => {
       });
     }
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };

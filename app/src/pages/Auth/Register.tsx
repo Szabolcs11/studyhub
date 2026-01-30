@@ -49,7 +49,7 @@ function Register() {
 
       if (response.data.success) {
         toast.success("Sikeres regisztráció! Jelentkezz be.");
-        navigate("/login");
+        navigate("/auth/login");
       } else {
         toast.error(response.data.message || "Regisztrációs hiba történt");
       }

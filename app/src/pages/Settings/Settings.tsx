@@ -385,14 +385,6 @@ function Settings({ user }: SettingsProps) {
 
             {/* Form Actions */}
             <div className="form-actions">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => setFormData({ currentPassword: "", newPassword: "", confirmPassword: "" })}
-                disabled={isLoading}
-              >
-                Visszaállítás
-              </button>
               <button type="submit" className="btn btn-primary" disabled={isLoading}>
                 {isLoading ? (
                   <>

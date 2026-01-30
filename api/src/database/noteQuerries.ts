@@ -3,9 +3,38 @@ import { Faculty, Note } from "./../types/";
 import { pool } from "./mysql";
 
 export const noteQuerry = {
-  async getAll(): Promise<Faculty[]> {
-    const [rows] = await pool.query("SELECT * FROM notes ORDER BY CreatedAT DESC");
-    return rows as Faculty[];
+  async getAll(): Promise<any[]> {
+    const [rows] = await pool.query(`
+    SELECT
+      notes.Id,
+      notes.Title,
+      notes.UploaderUserId,
+      notes.CourseId,
+      users.Id   AS userId,
+      users.Nickname AS userNickname,
+      users.AvatarURL AS userAvatarURL,
+      notes.CreatedAt,
+      notes.AttachmentUrl,
+      notes.Description
+    FROM notes
+    JOIN users ON users.Id = notes.UploaderUserId
+    ORDER BY notes.CreatedAT DESC
+  `);
+
+    return (rows as any[]).map((row) => ({
+      Id: row.Id,
+      Title: row.Title,
+      UploaderUserId: row.UploaderUserId,
+      CreatedAt: row.CreatedAt,
+      CourseId: row.CourseId,
+      AttachmentUrl: row.AttachmentUrl,
+      Description: row.Description,
+      User: {
+        Id: row.userId,
+        Nickname: row.userNickname,
+        AvatarURL: row.userAvatarURL,
+      },
+    }));
   },
 
   async getById(id: number): Promise<Faculty | null> {

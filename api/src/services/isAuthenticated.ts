@@ -6,7 +6,7 @@ import { getUserBySessionToken } from "../database/authQueries";
 import { COOKIE_NAMES } from "../config/contants";
 
 export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
   const token = req.cookies?.sessiontoken;
 
   if (!token) {

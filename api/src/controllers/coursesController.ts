@@ -9,7 +9,7 @@ export const getCourses = async (req: Request, res: Response) => {
     const courses = await courserService.getAllCourses();
     return res.json(courses);
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 
@@ -19,7 +19,7 @@ export const getCourse = async (req: Request, res: Response) => {
     const course = await courserService.getCourse(id);
     return res.json(course);
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 
@@ -29,6 +29,6 @@ export const getCourseNotes = async (req: Request, res: Response) => {
     const notes = await notesService.getNotesWhereCourseId(id);
     return res.json(notes);
   } catch {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };

@@ -9,7 +9,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const users = await userService.getAllUsers();
     return res.json(users);
   } catch (err) {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 
@@ -20,7 +20,7 @@ export const getUserById = async (req: Request, res: Response) => {
     if (!user) return res.status(404).json({ message: "User not found" });
     return res.json(user);
   } catch (err) {
-    return returnError(res, responses.Unexpected_Error, "en");
+    return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
 

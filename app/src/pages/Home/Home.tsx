@@ -60,7 +60,7 @@ function Home() {
           ...note,
           Course: courseInfo?.course,
           Faculty: courseInfo?.faculty,
-          UploaderName: `Felhasználó ${note.UploaderUserId}`,
+          UploaderName: `${note.User?.Nickname}`,
         };
       }),
     );
@@ -134,7 +134,7 @@ function Home() {
           ...note,
           Course: courseInfo?.course,
           Faculty: courseInfo?.faculty,
-          UploaderName: `Felhasználó ${note.UploaderUserId}`,
+          UploaderName: `${note.User?.Nickname}`,
         };
       }),
     );

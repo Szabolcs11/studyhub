@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from "express";
 const forbiddenWords = ["admin", "badword"];
 
 export const validateLoginInput = (req: Request, res: Response, next: NextFunction) => {
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
   const { Email, Password } = req.body;
 
   if (!Email) return returnError(res, responses.Missing_Email, language);
@@ -16,7 +16,7 @@ export const validateLoginInput = (req: Request, res: Response, next: NextFuncti
 };
 
 export const validateRegisterInput = (req: Request, res: Response, next: NextFunction) => {
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
   const { Nickname, Password, PasswordConfirm, Email } = req.body;
 
   if (!Nickname) return returnError(res, responses.Missing_Username, language);

@@ -27,6 +27,7 @@ export interface Note {
   UploaderUserId: number;
   CreatedAt: string;
   LastEdited?: string;
+  User?: User;
 }
 
 export interface CourseWithFaculty extends Course {

@@ -6,7 +6,7 @@ import path from "path";
 import { promises as fs } from "fs";
 
 export const uploadFile = async (req: Request, res: Response) => {
-  const lang = (req.headers.language as language) || "en";
+  const lang = (req.headers.language as language) || "hu";
 
   try {
     if (!req.file) {
@@ -24,7 +24,7 @@ export const uploadFile = async (req: Request, res: Response) => {
 };
 
 export const deleteFile = async (req: Request, res: Response) => {
-  const lang = (req.headers.language as language) || "en";
+  const lang = (req.headers.language as language) || "hu";
 
   try {
     const { filename } = req.params;
@@ -50,7 +50,7 @@ export const deleteFile = async (req: Request, res: Response) => {
 };
 
 export const downloadFile = async (req: Request, res: Response) => {
-  const lang = (req.headers.language as language) || "en";
+  const lang = (req.headers.language as language) || "hu";
 
   try {
     const { filename } = req.params;

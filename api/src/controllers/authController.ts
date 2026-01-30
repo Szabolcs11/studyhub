@@ -17,7 +17,7 @@ import { getUserBySessionToken } from "../database/authQueries";
 
 export const register = async (req: Request, res: Response) => {
   const { Nickname, Password, PasswordConfirm, Email } = req.body;
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
 
   const userExists = await getUserByNickname(Nickname);
   if (userExists) return returnError(res, responses.Username_Already_Exists, language);
@@ -35,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   const { Email, Password } = req.body;
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
 
   const sessionToken = await authenticateUser(Email, Password);
   if (!sessionToken) return returnError(res, responses.Invalid_Username_Or_Password, language);
@@ -52,7 +52,7 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
   const token = req.cookies?.sessiontoken;
   if (token) await destroySession(token);
   res.clearCookie(COOKIE_NAMES.SESSION);
@@ -60,7 +60,7 @@ export const logout = async (req: Request, res: Response) => {
 };
 
 export const authenticate = async (req: Request, res: Response) => {
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
   const token = req.cookies?.sessiontoken;
 
   if (!token) {

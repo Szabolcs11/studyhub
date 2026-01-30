@@ -6,7 +6,7 @@ import { returnError } from "../utils";
 import { COOKIE_NAMES } from "../config/contants";
 
 export const isAlreadyLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
-  const language = (req.headers.language as language) || "en";
+  const language = (req.headers.language as language) || "hu";
   const token = req.cookies.sessiontoken;
 
   if (!token) return next();
