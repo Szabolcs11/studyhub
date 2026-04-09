@@ -6,7 +6,8 @@ import { language } from "../types";
 
 export const getNotes = async (req: Request, res: Response) => {
   try {
-    const notes = await notesService.getAllNotes();
+    const token = req.cookies?.sessiontoken;
+    const notes = await notesService.getAllNotes(token);
     return res.json(notes);
   } catch {
     return returnError(res, responses.Unexpected_Error, "hu");
@@ -16,7 +17,8 @@ export const getNotes = async (req: Request, res: Response) => {
 export const getNote = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-    const note = await notesService.getNote(id);
+    const token = req.cookies?.sessiontoken;
+    const note = await notesService.getNote(id, token);
     return res.json(note);
   } catch {
     return returnError(res, responses.Unexpected_Error, "hu");

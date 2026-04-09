@@ -107,6 +107,24 @@ function Home() {
     }
   };
 
+  const likeNote = async (noteId: number) => {
+    const result = await notesService.likeNote(noteId);
+    if (result.success) {
+      toast.success(result.message);
+      if ((result as any).liked) {
+        setNotes((prev) =>
+          prev.map((note) => (note.Id === noteId ? { ...note, LikeCount: note.LikeCount + 1, Liked: true } : note)),
+        );
+      } else {
+        setNotes((prev) =>
+          prev.map((note) => (note.Id === noteId ? { ...note, LikeCount: note.LikeCount - 1, Liked: false } : note)),
+        );
+      }
+    } else {
+      toast.error(result.message);
+    }
+  };
+
   const filteredAndSortedNotes = notes
     .filter(
       (note) =>
@@ -288,8 +306,12 @@ function Home() {
                 )}
 
                 <div className="note-actions">
-                  <button className="action-button like-button">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <button className="action-button like-button" onClick={() => likeNote(note.Id)}>
+                    <svg
+                      fill={note.Liked ? "red" : "none"}
+                      stroke={note.Liked ? "red" : "currentColor"}
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -297,7 +319,7 @@ function Home() {
                         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                       />
                     </svg>
-                    <span>Kedvelem</span>
+                    <span>Kedvelés ({note.LikeCount})</span>
                   </button>
 
                   <button className="action-button comment-button" onClick={() => setSelectedNoteForComments(note)}>

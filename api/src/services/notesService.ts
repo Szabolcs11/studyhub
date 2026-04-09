@@ -2,12 +2,22 @@ import { noteQuerry } from "../database/noteQuerries";
 import { userQueries } from "../database/userQueries";
 
 export const notesService = {
-  async getAllNotes() {
-    return await noteQuerry.getAll();
+  async getAllNotes(token?: string) {
+    let userId;
+    if (token) {
+      const user = await userQueries.findByToken(token);
+      if (user) userId = user.Id;
+    }
+    return await noteQuerry.getAll(userId || 0);
   },
 
-  async getNote(id: number) {
-    return await noteQuerry.getById(id);
+  async getNote(id: number, token?: string) {
+    let userId;
+    if (token) {
+      const user = await userQueries.findByToken(token);
+      if (user) userId = user.Id;
+    }
+    return await noteQuerry.getById(id, userId || 0);
   },
 
   async getNotesWhereCourseId(id: number) {

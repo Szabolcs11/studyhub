@@ -178,5 +178,20 @@
         "hu": "Sikeresen megváltoztattad a jelszavad",
         "en": "Password changed successfully",
         "de": "Passwort erfolgreich geändert"
+    },
+    "Successfully_Liked_Note": {
+        "hu": "Sikeresen lájkoltad a jegyzetet",
+        "en": "Note liked successfully",
+        "de": "Notiz erfolgreich geliked"
+    },
+    "Successfully_Unliked_Note": {
+        "hu": "Sikeresen eltávolítottad a lájkot a jegyzetről",
+        "en": "Note unliked successfully",
+        "de": "Notiz erfolgreich entliked"
+    },
+    "Successfully_Commented_Note": {
+        "hu": "Sikeresen hozzászóltál a jegyzethez",
+        "en": "Comment added successfully",
+        "de": "Kommentar erfolgreich hinzugefügt"
     }
 }

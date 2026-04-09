@@ -3,8 +3,9 @@ import { Faculty, Note } from "./../types/";
 import { pool } from "./mysql";
 
 export const noteQuerry = {
-  async getAll(): Promise<any[]> {
-    const [rows] = await pool.query(`
+  async getAll(userId: number): Promise<any[]> {
+    const [rows] = await pool.query(
+      `
     SELECT
     notes.Id,
     notes.Title,
@@ -16,16 +17,41 @@ export const noteQuerry = {
     notes.CreatedAt,
     notes.AttachmentUrl,
     notes.Description,
-    COALESCE(c.CommentCount, 0) AS CommentCount
+
+    COALESCE(c.CommentCount, 0) AS CommentCount,
+    COALESCE(l.LikeCount, 0) AS LikeCount,
+
+    CASE 
+        WHEN ul.UserId IS NOT NULL THEN TRUE
+        ELSE FALSE
+    END AS Liked
+
 FROM notes
 JOIN users ON users.Id = notes.UploaderUserId
+
+-- comment count
 LEFT JOIN (
     SELECT NoteId, COUNT(*) AS CommentCount
     FROM note_comments
     GROUP BY NoteId
 ) c ON c.NoteId = notes.Id
+
+-- like count
+LEFT JOIN (
+    SELECT NoteId, COUNT(*) AS LikeCount
+    FROM note_likes
+    GROUP BY NoteId
+) l ON l.NoteId = notes.Id
+
+-- whether current user liked it
+LEFT JOIN note_likes ul 
+    ON ul.NoteId = notes.Id 
+    AND ul.UserId = ?
+
 ORDER BY notes.CreatedAt DESC;
-  `);
+  `,
+      [userId],
+    );
 
     const data = (rows as any[]).map((row) => ({
       Id: row.Id,
@@ -36,6 +62,8 @@ ORDER BY notes.CreatedAt DESC;
       AttachmentUrl: row.AttachmentUrl,
       Description: row.Description,
       CommentCount: row.CommentCount,
+      LikeCount: row.LikeCount,
+      Liked: row.Liked,
       User: {
         Id: row.userId,
         Nickname: row.userNickname,
@@ -46,8 +74,31 @@ ORDER BY notes.CreatedAt DESC;
     return data;
   },
 
-  async getById(id: number): Promise<Faculty | null> {
-    const [rows] = await pool.query("SELECT * FROM notes WHERE id = ?", [id]);
+  async getById(id: number, userId: number): Promise<Faculty | null> {
+    const [rows] = await pool.query(
+      `
+  SELECT 
+    notes.*,
+
+    (SELECT COUNT(*) 
+     FROM note_likes 
+     WHERE note_likes.NoteId = notes.Id) AS LikeCount,
+
+    CASE 
+      WHEN EXISTS (
+        SELECT 1 
+        FROM note_likes 
+        WHERE note_likes.NoteId = notes.Id 
+          AND note_likes.UserId = ?
+      ) THEN TRUE
+      ELSE FALSE
+    END AS Liked
+
+  FROM notes  
+  WHERE notes.Id = ?
+  `,
+      [userId, id],
+    );
     const result = rows as Faculty[];
     return result.length > 0 ? result[0] : null;
   },

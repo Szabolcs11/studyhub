@@ -71,6 +71,23 @@ class NotesService {
       throw new Error(errorMessage);
     }
   }
+
+  async likeNote(noteId: number): Promise<ApiResponse> {
+    try {
+      const response = await axios.post(
+        `${API_URL}notes/${noteId}/like`,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
+      return response.data;
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } } };
+      const errorMessage = axiosError.response?.data?.message || "Hiba történt a jegyzet kedvelése közben";
+      throw new Error(errorMessage);
+    }
+  }
 }
 
 const notesService = new NotesService();

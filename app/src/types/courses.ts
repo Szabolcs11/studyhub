@@ -29,6 +29,8 @@ export interface Note {
   LastEdited?: string;
   User?: User;
   CommentCount: number;
+  LikeCount: number;
+  Liked: boolean;
 }
 
 export interface CourseWithFaculty extends Course {
