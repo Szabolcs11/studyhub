@@ -1,0 +1,45 @@
+.comment-reply {
+  border-left: 3px solid var(--color-border);
+  padding: var(--spacing-4);
+  margin: var(--spacing-2) 0;
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.comment-reply:hover {
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-2);
+  gap: var(--spacing-3);
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+}
+
+.comment-date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.comment-content {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-2);
+  word-wrap: break-word;
+}
+
+.comment-replies {
+  margin-top: var(--spacing-3);
+}

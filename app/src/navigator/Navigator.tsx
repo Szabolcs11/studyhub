@@ -19,7 +19,8 @@ import { setUserData } from ".";
 function Navigator() {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<User>();
-  const navigator = useNavigate();
+  // @ts-ignore
+  const _navigator = useNavigate();
 
   useEffect(() => {
     const fetchUser = () => {
@@ -37,8 +38,6 @@ function Navigator() {
   if (isLoading) {
     return <Loader />;
   }
-
-  const isUserLoggedIn = !!user;
 
   return (
     <Routes>

@@ -37,3 +37,11 @@ export interface Note {
   CreatedAt: string;
   LastEdited?: string;
 }
+
+export interface Comment {
+  Id: number;
+  NoteId: number;
+  UserId: number;
+  Text: string;
+  CreatedAt: string;
+}

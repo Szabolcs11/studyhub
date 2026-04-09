@@ -3,12 +3,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ENDPOINTS } from "../../constans";
 import type { Note } from "../../types/courses";
+import type { Comment } from "../../types/comments";
+import CommentSection from "../../components/CommentSection";
+import { commentService } from "../../services/commentService";
 
 function NotePage() {
   const { id } = useParams<{ id: string }>();
   const [note, setNote] = useState<Note>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [commentsLoading, setCommentsLoading] = useState(false);
 
   const fetchNote = async () => {
     try {
@@ -26,6 +31,30 @@ function NotePage() {
   useEffect(() => {
     fetchNote();
   }, []);
+
+  useEffect(() => {
+    if (note?.Id) {
+      fetchComments(note.Id);
+    }
+  }, [note?.Id]);
+
+  const fetchComments = async (noteId: number) => {
+    setCommentsLoading(true);
+    try {
+      const fetchedComments = await commentService.fetchNoteComments(noteId);
+      setComments(fetchedComments);
+    } catch (err) {
+      console.error("Failed to load comments:", err);
+      // Silently fail - comments are optional
+      setComments([]);
+    } finally {
+      setCommentsLoading(false);
+    }
+  };
+
+  const handleCommentAdded = (newComment: Comment) => {
+    setComments((prev) => [newComment, ...prev]);
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -159,6 +188,13 @@ function NotePage() {
             </div>
           </div>
         </section>
+
+        <CommentSection
+          noteId={note.Id}
+          comments={comments}
+          isLoading={commentsLoading}
+          onCommentAdded={handleCommentAdded}
+        />
       </div>
     </div>
   );

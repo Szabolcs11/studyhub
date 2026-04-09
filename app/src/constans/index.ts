@@ -13,4 +13,5 @@ export const ENDPOINTS = {
   NOTE: API_URL + `notes/`,
   UPLOAD_FILE: API_URL + `files/upload`,
   CHANGE_PASSWORD: API_URL + "auth/changepassword",
+  NOTE_COMMENTS: (noteId: number) => API_URL + `notes/${noteId}/comments`,
 };

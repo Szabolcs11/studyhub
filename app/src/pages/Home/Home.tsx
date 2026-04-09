@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import notesService from "../../services/notesService";
 import coursesService from "../../services/coursesService";
 import { type Note, type Course, type Faculty } from "../../types/courses";
+import CommentModal from "../../components/CommentModal";
 import { toast } from "react-toastify";
 import "./Home.css";
 
@@ -17,6 +18,7 @@ function Home() {
   const [courseCache, setCourseCache] = useState<Map<number, { course: Course; faculty: Faculty }>>(new Map());
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"recent" | "oldest">("recent");
+  const [selectedNoteForComments, setSelectedNoteForComments] = useState<NoteWithCourseInfo | null>(null);
 
   const getNotes = async () => {
     try {
@@ -298,7 +300,7 @@ function Home() {
                     <span>Kedvelem</span>
                   </button>
 
-                  <button className="action-button comment-button">
+                  <button className="action-button comment-button" onClick={() => setSelectedNoteForComments(note)}>
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
@@ -327,6 +329,15 @@ function Home() {
           </div>
         )}
       </div>
+
+      {selectedNoteForComments && (
+        <CommentModal
+          noteId={selectedNoteForComments.Id}
+          noteTitle={selectedNoteForComments.Title}
+          isOpen={!!selectedNoteForComments}
+          onClose={() => setSelectedNoteForComments(null)}
+        />
+      )}
     </div>
   );
 }
