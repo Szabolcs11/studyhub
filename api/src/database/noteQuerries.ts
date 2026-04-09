@@ -6,22 +6,28 @@ export const noteQuerry = {
   async getAll(): Promise<any[]> {
     const [rows] = await pool.query(`
     SELECT
-      notes.Id,
-      notes.Title,
-      notes.UploaderUserId,
-      notes.CourseId,
-      users.Id   AS userId,
-      users.Nickname AS userNickname,
-      users.AvatarURL AS userAvatarURL,
-      notes.CreatedAt,
-      notes.AttachmentUrl,
-      notes.Description
-    FROM notes
-    JOIN users ON users.Id = notes.UploaderUserId
-    ORDER BY notes.CreatedAT DESC
+    notes.Id,
+    notes.Title,
+    notes.UploaderUserId,
+    notes.CourseId,
+    users.Id AS userId,
+    users.Nickname AS userNickname,
+    users.AvatarURL AS userAvatarURL,
+    notes.CreatedAt,
+    notes.AttachmentUrl,
+    notes.Description,
+    COALESCE(c.CommentCount, 0) AS CommentCount
+FROM notes
+JOIN users ON users.Id = notes.UploaderUserId
+LEFT JOIN (
+    SELECT NoteId, COUNT(*) AS CommentCount
+    FROM note_comments
+    GROUP BY NoteId
+) c ON c.NoteId = notes.Id
+ORDER BY notes.CreatedAt DESC;
   `);
 
-    return (rows as any[]).map((row) => ({
+    const data = (rows as any[]).map((row) => ({
       Id: row.Id,
       Title: row.Title,
       UploaderUserId: row.UploaderUserId,
@@ -29,12 +35,15 @@ export const noteQuerry = {
       CourseId: row.CourseId,
       AttachmentUrl: row.AttachmentUrl,
       Description: row.Description,
+      CommentCount: row.CommentCount,
       User: {
         Id: row.userId,
         Nickname: row.userNickname,
         AvatarURL: row.userAvatarURL,
       },
     }));
+
+    return data;
   },
 
   async getById(id: number): Promise<Faculty | null> {
