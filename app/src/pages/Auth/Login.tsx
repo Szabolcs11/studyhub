@@ -8,6 +8,7 @@ import { ENDPOINTS } from "../../constans";
 import { PATHS } from "../../navigator/Routes";
 import { FormInput } from "./Components/FormInput";
 import { loginSchema } from "./schemas";
+import { setUserData } from "../../navigator";
 
 interface LoginFormData {
   email: string;
@@ -43,6 +44,7 @@ function Login() {
       );
 
       if (response.data.success) {
+        setUserData();
         toast.success(response.data.message);
         navigate("/");
       } else {

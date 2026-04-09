@@ -16,29 +16,32 @@ import { PATHS } from "./Routes";
 import type { User } from "../types/courses";
 
 export let navigator: any;
-export let setUserData: (user: any) => void;
+export let setUserData: () => void;
 export let isUserLoggined: boolean;
 
 function index() {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | false>();
 
   navigator = useNavigate();
   isUserLoggined = !user ? false : true;
 
-  setUserData = (user) => {
-    setUser(user as User);
+  setUserData = () => {
+    fetchUser();
+  };
+
+  const fetchUser = () => {
+    axios.post(ENDPOINTS.AUTHENTICATE, {}, { withCredentials: true }).then((res) => {
+      if (res.data.success) {
+        setUser(res.data.user);
+      } else {
+        setUser(false);
+      }
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
-    const fetchUser = () => {
-      axios.post(ENDPOINTS.AUTHENTICATE, {}, { withCredentials: true }).then((res) => {
-        if (res.data.success) {
-          setUser(res.data.user);
-        }
-        setIsLoading(false);
-      });
-    };
     fetchUser();
   }, []);
 
@@ -66,7 +69,7 @@ function index() {
         <Route path={PATHS.COURSES} element={<Courses />} />
         <Route path={PATHS.COURSES + ":id"} element={<Course />} />
         <Route path={PATHS.NOTES + ":id"} element={<NotePage />} />
-        <Route path={PATHS.SETTINGS} element={<Settings user={user!} />} />
+        <Route path={PATHS.SETTINGS} element={<Settings user={user as User} />} />
       </Route>
       <Route path="*" element={<Navigate to={PATHS.HOME} />} />
     </Routes>

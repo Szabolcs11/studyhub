@@ -14,6 +14,7 @@ import NotePage from "../pages/Note/NotePage";
 import Settings from "../pages/Settings/Settings";
 import { PATHS } from "./Routes";
 import type { User } from "../types/courses";
+import { setUserData } from ".";
 
 function Navigator() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +26,7 @@ function Navigator() {
       axios.post(ENDPOINTS.AUTHENTICATE, {}, { withCredentials: true }).then((res) => {
         if (res.data.success) {
           setUser(res.data.user);
+          setUserData();
         }
         setIsLoading(false);
       });
