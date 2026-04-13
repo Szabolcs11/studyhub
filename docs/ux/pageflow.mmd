@@ -1,0 +1,37 @@
+flowchart TD
+
+%% ========== AUTH FLOW ==========
+S01["🔒 S01 — Login (▶ belépési pont)"]
+S02["🔒 S02 — Register"]
+
+%% ========== MAIN APP ==========
+S03["S03 — Home"]
+S04["S04 — Courses"]
+S05["S05 — Course Details"]
+S06["S06 — Note Details"]
+S07["S07 — Settings"]
+
+%% ========== AUTH LOGIC ==========
+S01 -->|"login submit"| S03
+S01 -->|"register link"| S02
+S02 -->|"register submit"| S03
+
+%% ========== PROTECTED REDIRECT ==========
+S03 -->|"logout / session expire"| S01
+
+%% ========== MAIN NAVIGATION ==========
+S03 -->|"courses menu click"| S04
+S03 -->|"open note"| S06
+S03 -->|"settings click"| S07
+
+S04 -->|"select course"| S05
+S05 -->|"open note"| S06
+
+%% ========== BACK NAVIGATION ==========
+S06 -->|"back"| S03
+S05 -->|"back"| S04
+S07 -->|"back"| S03
+
+%% ========== FALLBACK ==========
+S08["S08 — Redirect (*)"]
+S08 -->|"invalid route"| S03
