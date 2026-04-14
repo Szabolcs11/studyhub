@@ -64,7 +64,7 @@ function index() {
           <Route path="/auth/*" element={<Navigate to={PATHS.HOME} />} />
         </>
       )}
-      <Route element={<Layout />}>
+      <Route element={<Layout isAuthenticated={!!user} />}>
         <Route path={PATHS.HOME} element={<Home />} />
         <Route path={PATHS.COURSES} element={<Courses />} />
         <Route path={PATHS.COURSES + ":id"} element={<Course />} />

@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
 
-const Layout: React.FC = () => {
+type LayoutProps = {
+  isAuthenticated: boolean;
+};
+
+const Layout: React.FC<LayoutProps> = ({ isAuthenticated }) => {
   const [isCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
@@ -41,10 +45,11 @@ const Layout: React.FC = () => {
 
   return (
     <div className="app-layout">
-      <Sidebar 
+      <Sidebar
         isCollapsed={isCollapsed}
         isMobileOpen={isMobileOpen}
         onMobileClose={handleMobileClose}
+        isAuthenticated={isAuthenticated}
       />
 
       <main className={`main-content ${isCollapsed ? "sidebar-collapsed" : ""}`}>

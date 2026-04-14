@@ -42,24 +42,6 @@ function Settings({ user }: SettingsProps) {
   });
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Check authentication status
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.post(ENDPOINTS.AUTHENTICATE, {}, { withCredentials: true });
-        if (!response.data.success) {
-          toast.error("A beállításokhoz bejelentkezés szükséges!");
-          window.location.href = "/auth/login";
-        }
-      } catch {
-        toast.error("A beállításokhoz bejelentkezés szükséges!");
-        window.location.href = "/auth/login";
-      }
-    };
-
-    checkAuth();
-  }, []);
-
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 

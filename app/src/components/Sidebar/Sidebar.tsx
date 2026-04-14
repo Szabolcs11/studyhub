@@ -9,27 +9,18 @@ interface SidebarProps {
   isCollapsed?: boolean;
   isMobileOpen?: boolean;
   onMobileClose?: () => void;
+  isAuthenticated?: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false, isMobileOpen = false, onMobileClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  isCollapsed = false,
+  isMobileOpen = false,
+  onMobileClose,
+  isAuthenticated,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  // Check authentication status
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.post(ENDPOINTS.AUTHENTICATE, {}, { withCredentials: true });
-        setIsAuthenticated(response.data.success);
-      } catch {
-        setIsAuthenticated(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
 
   const handleLogout = async () => {
     try {
