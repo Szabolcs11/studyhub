@@ -1,6 +1,8 @@
 import { ResultSetHeader } from "mysql2";
 import { Faculty, Note } from "./../types/";
 import { pool } from "./mysql";
+import { facultyQuerry } from "./facultyQueries";
+import { coursesQuerry } from "./coursesQuerries";
 
 export const noteQuerry = {
   async getAll(userId: number): Promise<any[]> {
@@ -53,6 +55,16 @@ ORDER BY notes.CreatedAt DESC;
       [userId],
     );
 
+    await Promise.all(
+      (rows as any[]).map(async (server: any) => {
+        const course = await coursesQuerry.getById(server.CourseId);
+        server.course = course;
+
+        const faculty = await facultyQuerry.getById(server.course.FacultyId);
+        server.faculty = faculty;
+      }),
+    );
+
     const data = (rows as any[]).map((row) => ({
       Id: row.Id,
       Title: row.Title,
@@ -69,6 +81,8 @@ ORDER BY notes.CreatedAt DESC;
         Nickname: row.userNickname,
         AvatarURL: row.userAvatarURL,
       },
+      Course: row.course,
+      Faculty: row.faculty,
     }));
 
     return data;

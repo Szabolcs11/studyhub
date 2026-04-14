@@ -5,6 +5,7 @@ import { type Note, type Course, type Faculty } from "../../types/courses";
 import CommentModal from "../../components/CommentModal";
 import { toast } from "react-toastify";
 import "./Home.css";
+import FeedSkeleton from "./Components/FeedSkeleton";
 
 interface NoteWithCourseInfo extends Note {
   Course?: Course;
@@ -26,7 +27,6 @@ function Home() {
       const notesData = await notesService.getNotes();
       if (notesData) {
         setNotes(notesData);
-        await enrichNotesWithCourseInfo(notesData);
       }
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -34,38 +34,6 @@ function Home() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const enrichNotesWithCourseInfo = async (notesList: Note[]) => {
-    const uniqueCourseIds = [...new Set(notesList.map((note) => note.CourseId))];
-
-    for (const courseId of uniqueCourseIds) {
-      if (!courseCache.has(courseId)) {
-        try {
-          const course = await coursesService.getCourse(courseId);
-          if (course) {
-            const faculty = await coursesService.getFaculty(course.FacultyId);
-            if (faculty) {
-              setCourseCache((prev) => new Map(prev.set(courseId, { course, faculty })));
-            }
-          }
-        } catch {
-          console.error(`Error fetching course info for ${courseId}`);
-        }
-      }
-    }
-
-    setNotes((prevNotes) =>
-      prevNotes.map((note) => {
-        const courseInfo = courseCache.get(note.CourseId);
-        return {
-          ...note,
-          Course: courseInfo?.course,
-          Faculty: courseInfo?.faculty,
-          UploaderName: `${note.User?.Nickname}`,
-        };
-      }),
-    );
   };
 
   const formatDate = (dateString: string) => {
@@ -145,70 +113,8 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    // Update notes when course cache changes
-    setNotes((prevNotes) =>
-      prevNotes.map((note) => {
-        const courseInfo = courseCache.get(note.CourseId);
-        return {
-          ...note,
-          Course: courseInfo?.course,
-          Faculty: courseInfo?.faculty,
-          UploaderName: `${note.User?.Nickname}`,
-        };
-      }),
-    );
-  }, [courseCache]);
-
   if (isLoading) {
-    return (
-      <div className="home-container">
-        <div className="feed-header">
-          <h1>StudyHub Feed</h1>
-          <p>Fedezd fel a legfrissebb jegyzeteket a közösségtől!</p>
-        </div>
-
-        <div className="feed-controls">
-          <div className="search-container">
-            <svg className="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <input type="text" placeholder="Keresés jegyzetekre, kurzusokra..." className="search-input" disabled />
-          </div>
-        </div>
-
-        <div className="skeleton-loader">
-          {[...Array(3)].map((_, index) => (
-            <div key={index} className="skeleton-card">
-              <div className="skeleton-header">
-                <div className="skeleton-avatar"></div>
-                <div className="skeleton-info">
-                  <div className="skeleton-line skeleton-name"></div>
-                  <div className="skeleton-line skeleton-course"></div>
-                </div>
-                <div className="skeleton-line skeleton-date"></div>
-              </div>
-              <div className="skeleton-content">
-                <div className="skeleton-line skeleton-title"></div>
-                <div className="skeleton-line skeleton-text"></div>
-                <div className="skeleton-line skeleton-text"></div>
-              </div>
-              <div className="skeleton-actions">
-                <div className="skeleton-button"></div>
-                <div className="skeleton-button"></div>
-                <div className="skeleton-button"></div>
-                <div className="skeleton-button"></div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
+    return <FeedSkeleton />;
   }
 
   return (
@@ -262,9 +168,9 @@ function Home() {
               <div key={note.Id} className="note-card">
                 <div className="note-header">
                   <div className="user-info">
-                    <div className="user-avatar">{note.UploaderName?.charAt(0).toUpperCase() || "?"}</div>
+                    <div className="user-avatar">{note.User?.Nickname?.charAt(0).toUpperCase() || "?"}</div>
                     <div className="user-details">
-                      <div className="user-name">{note.UploaderName}</div>
+                      <div className="user-name">{note.User?.Nickname}</div>
                       <div className="course-info">
                         {note.Course?.Name || "Ismeretlen kurzus"} • {note.Faculty?.Name || "Ismeretlen kar"}
                       </div>
