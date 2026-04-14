@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import HomeLayout from "../components/HomeLayout";
+import Layout from "../components/Layout";
 import Loader from "../components/Loader";
 import { ENDPOINTS } from "../constans";
 import AuthLayout from "../pages/Auth/Components/AuthLayout";
@@ -12,8 +12,8 @@ import Courses from "../pages/Courses/Courses";
 import Home from "../pages/Home/Home";
 import NotePage from "../pages/Note/NotePage";
 import Settings from "../pages/Settings/Settings";
-import { PATHS } from "./Routes";
 import type { User } from "../types/courses";
+import { PATHS } from "./Routes";
 
 export let navigator: any;
 export let setUserData: () => void;
@@ -64,7 +64,7 @@ function index() {
           <Route path="/auth/*" element={<Navigate to={PATHS.HOME} />} />
         </>
       )}
-      <Route element={<HomeLayout />}>
+      <Route element={<Layout />}>
         <Route path={PATHS.HOME} element={<Home />} />
         <Route path={PATHS.COURSES} element={<Courses />} />
         <Route path={PATHS.COURSES + ":id"} element={<Course />} />
