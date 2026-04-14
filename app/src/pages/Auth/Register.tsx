@@ -75,7 +75,7 @@ function Register() {
           name="nickname"
           control={control}
           label="Felhasználónév"
-          placeholder="Lássuk ki ez a hős"
+          placeholder="Felhasználónév"
           error={errors.nickname?.message}
         />
 

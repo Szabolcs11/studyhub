@@ -72,7 +72,7 @@ function Login() {
           name="email"
           control={control}
           label="Email cím"
-          placeholder="Lássuk ki ez a hős"
+          placeholder="Emiail cím"
           error={errors.email?.message}
         />
 
