@@ -20,13 +20,7 @@ export const noteQuerry = {
     notes.AttachmentUrl,
     notes.Description,
 
-    COALESCE(c.CommentCount, 0) AS CommentCount,
-    COALESCE(l.LikeCount, 0) AS LikeCount,
-
-    CASE 
-        WHEN ul.UserId IS NOT NULL THEN TRUE
-        ELSE FALSE
-    END AS Liked
+    COALESCE(c.CommentCount, 0) AS CommentCount
 
 FROM notes
 JOIN users ON users.Id = notes.UploaderUserId
@@ -38,30 +32,22 @@ LEFT JOIN (
     GROUP BY NoteId
 ) c ON c.NoteId = notes.Id
 
--- like count
-LEFT JOIN (
-    SELECT NoteId, COUNT(*) AS LikeCount
-    FROM note_likes
-    GROUP BY NoteId
-) l ON l.NoteId = notes.Id
-
--- whether current user liked it
-LEFT JOIN note_likes ul 
-    ON ul.NoteId = notes.Id 
-    AND ul.UserId = ?
-
 ORDER BY notes.CreatedAt DESC;
   `,
-      [userId],
     );
 
     await Promise.all(
-      (rows as any[]).map(async (server: any) => {
-        const course = await coursesQuerry.getById(server.CourseId);
-        server.course = course;
+      (rows as any[]).map(async (note: any) => {
+        const course = await coursesQuerry.getById(note.CourseId);
+        note.course = course;
 
-        const faculty = await facultyQuerry.getById(server.course.FacultyId);
-        server.faculty = faculty;
+        const faculty = await facultyQuerry.getById(note.course.FacultyId);
+        note.faculty = faculty;
+
+        const likeCount = await this.likesCount(note.Id);
+        note.LikeCount = likeCount;
+        const liked = await this.isLikedByUser(note.Id, userId);
+        note.Liked = liked;
       }),
     );
 
@@ -160,5 +146,16 @@ ORDER BY notes.CreatedAt DESC;
     );
 
     return result.insertId;
+  },
+
+  async likesCount(noteId: number): Promise<number> {
+    const [rows] = await pool.query(`SELECT COUNT(*) AS LikeCount FROM note_likes WHERE NoteId = ?`, [noteId]);
+    const likeCount = (rows as any)[0].LikeCount;
+    return likeCount;
+  },
+
+  async isLikedByUser(noteId: number, userId: number): Promise<boolean> {
+    const [rows] = await pool.query(`SELECT 1 FROM note_likes WHERE NoteId = ? AND UserId = ?`, [noteId, userId]);
+    return (rows as any).length > 0;
   },
 };

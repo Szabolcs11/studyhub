@@ -5,7 +5,7 @@ import { type Note, type CreateNoteRequest, type ApiResponse } from "../types/co
 class NotesService {
   async getCourseNotes(courseId: number): Promise<Note[]> {
     try {
-      const response = await axios.get(`${API_URL}courses/${courseId}/notes`);
+      const response = await axios.get(`${API_URL}courses/${courseId}/notes`, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.error(`Error fetching notes for course ${courseId}:`, error);
@@ -15,7 +15,7 @@ class NotesService {
 
   async getNotes(): Promise<Note[] | null> {
     try {
-      const response = await axios.get(`${API_URL}notes/`);
+      const response = await axios.get(`${API_URL}notes/`, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.error("Error fetching notes", error);
@@ -25,7 +25,7 @@ class NotesService {
 
   async getNote(noteId: number): Promise<Note | null> {
     try {
-      const response = await axios.get(`${API_URL}notes/${noteId}`);
+      const response = await axios.get(`${API_URL}notes/${noteId}`, { withCredentials: true });
       return response.data;
     } catch (error) {
       console.error(`Error fetching note ${noteId}:`, error);
