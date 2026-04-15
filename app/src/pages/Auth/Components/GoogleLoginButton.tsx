@@ -3,7 +3,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ENDPOINTS } from "../../../constans";
 
-const GoogleLoginButton = () => {
+type GoogleLoginButtonProps = {
+  type: "login" | "register";
+};
+
+const GoogleLoginButton = ({ type }: GoogleLoginButtonProps) => {
   const handleSuccess = async (credentialResponse: any) => {
     const token = credentialResponse.credential;
 
@@ -32,7 +36,13 @@ const GoogleLoginButton = () => {
 
   return (
     <>
-      <GoogleLogin shape="square" onSuccess={handleSuccess} onError={() => console.log("Login Failed")} />
+      <GoogleLogin
+        shape="square"
+        onSuccess={handleSuccess}
+        onError={() => console.log("Login Failed")}
+        size="large"
+        text={type === "login" ? "signin_with" : "signup_with"}
+      />
     </>
   );
 };

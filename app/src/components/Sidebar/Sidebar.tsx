@@ -6,6 +6,7 @@ import { ENDPOINTS } from "../../constans";
 import { setUserData } from "../../navigator";
 import { PATHS } from "../../navigator/Routes";
 import CreateNoteModal from "./CreateNoteModal";
+import GoogleLoginButton from "../../pages/Auth/Components/GoogleLoginButton";
 
 interface SidebarProps {
   isCollapsed?: boolean;
@@ -221,6 +222,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 </span>
                 <span className="nav-text">Regisztráció</span>
               </Link>
+              <GoogleLoginButton type="login" />
             </div>
           )}
         </div>

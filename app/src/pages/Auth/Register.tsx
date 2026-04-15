@@ -121,7 +121,7 @@ function Register() {
         </div>
       </form>
       <div className="google-login-container">
-        <GoogleLoginButton />
+        <GoogleLoginButton type="register" />
       </div>
     </div>
   );

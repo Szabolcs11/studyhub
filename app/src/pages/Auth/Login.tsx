@@ -100,7 +100,7 @@ function Login() {
         </div>
       </form>
       <div className="google-login-container">
-        <GoogleLoginButton />
+        <GoogleLoginButton type="login" />
       </div>
     </div>
   );
