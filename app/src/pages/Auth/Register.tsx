@@ -8,6 +8,7 @@ import { ENDPOINTS } from "../../constans";
 import { PATHS } from "../../navigator/Routes";
 import { FormInput } from "./Components/FormInput";
 import { registerSchema } from "./schemas";
+import GoogleLoginButton from "./Components/GoogleLoginButton";
 
 interface RegisterFormData {
   nickname: string;
@@ -119,6 +120,9 @@ function Register() {
           </div>
         </div>
       </form>
+      <div className="google-login-container">
+        <GoogleLoginButton />
+      </div>
     </div>
   );
 }

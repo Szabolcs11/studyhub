@@ -99,9 +99,9 @@ function Login() {
           </div>
         </div>
       </form>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <div className="google-login-container">
         <GoogleLoginButton />
-      </GoogleOAuthProvider>
+      </div>
     </div>
   );
 }

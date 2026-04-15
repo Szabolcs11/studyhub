@@ -404,3 +404,7 @@ body {
     flex-direction: column;
   }
 }
+
+.google-login-container {
+  margin-top: var(--spacing-6);
+}
