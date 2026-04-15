@@ -108,6 +108,12 @@ function Home() {
       }
     });
 
+  const increaseNoteCommentCount = (noteId: number) => {
+    setNotes((prev) =>
+      prev.map((note) => (note.Id === noteId ? { ...note, CommentCount: note.CommentCount + 1 } : note)),
+    );
+  };
+
   useEffect(() => {
     getNotes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -264,6 +270,7 @@ function Home() {
           noteTitle={selectedNoteForComments.Title}
           isOpen={!!selectedNoteForComments}
           onClose={() => setSelectedNoteForComments(null)}
+          onCommentAdded={() => increaseNoteCommentCount(selectedNoteForComments.Id)}
         />
       )}
     </div>

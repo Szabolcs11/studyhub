@@ -11,9 +11,10 @@ interface CommentModalProps {
   isOpen: boolean;
   onClose: () => void;
   noteTitle: string;
+  onCommentAdded: () => void;
 }
 
-export default function CommentModal({ noteId, isOpen, onClose, noteTitle }: CommentModalProps) {
+export default function CommentModal({ noteId, isOpen, onClose, noteTitle, onCommentAdded }: CommentModalProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +45,7 @@ export default function CommentModal({ noteId, isOpen, onClose, noteTitle }: Com
         content,
       });
       setComments((prev) => [newComment, ...prev]);
+      onCommentAdded();
     } catch (error: any) {
       toast.error(error.message);
     } finally {
