@@ -6,7 +6,7 @@ type LayoutProps = {
   isAuthenticated: boolean;
 };
 
-const Layout: React.FC<LayoutProps> = ({ isAuthenticated }) => {
+const Layout: React.FC<LayoutProps> = ({ isAuthenticated }: LayoutProps) => {
   const [isCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 

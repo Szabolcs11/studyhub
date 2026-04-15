@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ENDPOINTS } from "../../constans";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import "./Settings.css";
-import type { User } from "../../types/courses";
+import { ENDPOINTS } from "../../constans";
 import { navigator } from "../../navigator";
 import { PATHS } from "../../navigator/Routes";
+import type { User } from "../../types/courses";
+import "./Settings.css";
 
 interface FormData {
   currentPassword: string;

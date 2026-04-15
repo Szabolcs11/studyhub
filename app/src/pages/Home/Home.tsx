@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import notesService from "../../services/notesService";
-import coursesService from "../../services/coursesService";
-import { type Note, type Course, type Faculty } from "../../types/courses";
-import CommentModal from "../../components/CommentModal";
 import { toast } from "react-toastify";
-import "./Home.css";
+import CommentModal from "../../components/CommentModal";
+import notesService from "../../services/notesService";
+import { type Course, type Faculty, type Note } from "../../types/courses";
 import FeedSkeleton from "./Components/FeedSkeleton";
+import "./Home.css";
 
 interface NoteWithCourseInfo extends Note {
   Course?: Course;
@@ -16,7 +15,6 @@ interface NoteWithCourseInfo extends Note {
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [notes, setNotes] = useState<NoteWithCourseInfo[]>([]);
-  const [courseCache, setCourseCache] = useState<Map<number, { course: Course; faculty: Faculty }>>(new Map());
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"recent" | "oldest">("recent");
   const [selectedNoteForComments, setSelectedNoteForComments] = useState<NoteWithCourseInfo | null>(null);
