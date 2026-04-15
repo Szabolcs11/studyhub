@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import CreateNoteModal from "./CreateNoteModal";
-import { ENDPOINTS } from "../../constans";
 import axios from "axios";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ENDPOINTS } from "../../constans";
+import { setUserData } from "../../navigator";
+import { PATHS } from "../../navigator/Routes";
+import CreateNoteModal from "./CreateNoteModal";
 
 interface SidebarProps {
   isCollapsed?: boolean;
@@ -27,11 +29,13 @@ const Sidebar: React.FC<SidebarProps> = ({
       const response = await axios.post(ENDPOINTS.LOGOUT, {}, { withCredentials: true });
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/auth/login");
+        navigate(PATHS.HOME);
       }
+      setUserData();
     } catch (error) {
       console.error("Logout error:", error);
-      navigate("/auth/login");
+      navigate(PATHS.HOME);
+      setUserData();
     }
   };
 
