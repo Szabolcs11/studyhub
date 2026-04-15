@@ -193,5 +193,10 @@
         "hu": "Sikeresen hozzászóltál a jegyzethez",
         "en": "Comment added successfully",
         "de": "Kommentar erfolgreich hinzugefügt"
+    },
+    "Email_Already_Taken_Use_Password_To_Login": {
+        "hu": "Ez az email cím már használatban van, kérlek használd a jelszavad a bejelentkezéshez",
+        "en": "This email address is already taken, please use your password to log in",
+        "de": "Diese E-Mail-Adresse ist bereits vergeben, bitte verwenden Sie Ihr Passwort, um sich anzumelden"
     }
 }

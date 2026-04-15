@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, authenticate, changePassword } from "../controllers/authController";
+import { register, login, logout, authenticate, changePassword, googleLogin } from "../controllers/authController";
 import { validateLoginInput, validateRegisterInput } from "../validators/authValidator";
 import { isAlreadyLoggedIn } from "../services/isAlreadyLoggedIn";
 import { isAuthenticated } from "../services/isAuthenticated";
@@ -11,5 +11,6 @@ router.post("/login", isAlreadyLoggedIn, validateLoginInput, login);
 router.post("/logout", isAuthenticated, logout);
 router.post("/authenticate", authenticate);
 router.post("/changepassword", isAuthenticated, changePassword);
+router.post("/google", isAlreadyLoggedIn, googleLogin);
 
 export default router;

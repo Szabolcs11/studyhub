@@ -4,6 +4,7 @@ export const APP_URL = import.meta.env.VITE_APP_URL as string;
 export const ENDPOINTS = {
   AUTHENTICATE: API_URL + "auth/authenticate",
   LOGIN: API_URL + "auth/login",
+  GOOGLE_LOGIN: API_URL + "auth/google",
   REGISTER: API_URL + "auth/register",
   LOGOUT: API_URL + "auth/logout",
   UNIVERSITIES: API_URL + "universities",

@@ -10,6 +10,7 @@ import {
   findUserById,
   findUserByNickname,
 } from "../database/authQueries";
+import { User } from "../types";
 
 export const authenticateUser = async (email: string, password: string) => {
   const user = await findUserByEmail(email);
@@ -31,7 +32,7 @@ export const getUserByNickname = async (email: string) => {
   return await findUserByNickname(email);
 };
 
-export const getUserByEmail = async (email: string) => {
+export const getUserByEmail = async (email: string): Promise<User | null> => {
   return await findUserByEmail(email);
 };
 
@@ -54,4 +55,9 @@ export const updatePassword = async (id: number, newPassword: string) => {
 
 export const updateLastLogin = async (email: string) => {
   return await changeLastLogin(email);
+};
+
+export const isUsernameTaken = async (nickname: string) => {
+  const user = await findUserByNickname(nickname);
+  return !!user;
 };

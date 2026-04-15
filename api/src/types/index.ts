@@ -5,6 +5,7 @@ export interface User {
   Nickname: string;
   Email: string;
   Password: string;
+  GoogleID?: string;
 }
 
 export interface University {

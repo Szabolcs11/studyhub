@@ -1,14 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ENDPOINTS } from "../../constans";
+import { setUserData } from "../../navigator";
 import { PATHS } from "../../navigator/Routes";
 import { FormInput } from "./Components/FormInput";
+import GoogleLoginButton from "./Components/GoogleLoginButton";
 import { loginSchema } from "./schemas";
-import { setUserData } from "../../navigator";
 
 interface LoginFormData {
   email: string;
@@ -45,7 +47,7 @@ function Login() {
 
       if (response.data.success) {
         setUserData();
-        toast.success(response.data.message);
+        toast.success(response.data.message || "Sikeres bejelentkezés");
         navigate("/");
       } else {
         toast.error(response.data.message || "Bejelentkezési hiba történt");
@@ -97,6 +99,9 @@ function Login() {
           </div>
         </div>
       </form>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <GoogleLoginButton />
+      </GoogleOAuthProvider>
     </div>
   );
 }

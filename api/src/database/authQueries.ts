@@ -27,11 +27,12 @@ export const deleteSession = async (token: string) => {
   await pool.execute("DELETE FROM sessions WHERE Token = ?", [token]);
 };
 
-export const createUser = async (nickname: string, password: string, email: string) => {
-  const [result] = await pool.execute("INSERT INTO users (Nickname, Password, Email) VALUES (?, ?, ?)", [
+export const createUser = async (nickname: string, password: string, email: string, GoogleID?: string) => {
+  const [result] = await pool.execute("INSERT INTO users (Nickname, Password, Email, GoogleID) VALUES (?, ?, ?, ?)", [
     nickname,
     password,
     email,
+    GoogleID,
   ]);
   return result;
 };
