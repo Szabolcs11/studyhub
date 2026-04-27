@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2026 at 06:34 PM
+-- Generation Time: Apr 27, 2026 at 04:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -145,7 +145,10 @@ INSERT INTO `notes` (`Id`, `CourseId`, `Title`, `AttachmentUrl`, `Description`, 
 (27, 15, 'Mérleg', '/files/merleg.pdf', 'Eszközök', 3, '2026-01-30 00:38:33', NULL),
 (28, 16, 'Alaptörvény', '/files/alaptorveny.pdf', 'Jogforrások', 4, '2026-01-30 00:38:33', NULL),
 (29, 17, 'Szerződések', '/files/contract.pdf', 'Polgári jog', 4, '2026-01-30 00:38:33', NULL),
-(30, 18, 'Etika', '/files/etika.pdf', 'Morálfilozófia', 5, '2026-01-30 00:38:33', NULL);
+(30, 18, 'Etika', '/files/etika.pdf', 'Morálfilozófia', 5, '2026-01-30 00:38:33', NULL),
+(32, 1, 'asd', '', 'asd', 1, '2026-04-09 20:35:47', NULL),
+(33, 3, 'dsfg', '', 'sdg', 1, '2026-04-13 22:06:15', NULL),
+(34, 1, ' Új cím', 'http://localhost:2004/api/files/SzamitogepesGrafikaVizsgajegyzet-1776271732941-11259013.pdf', 'Új leírás', 11, '2026-04-15 18:48:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -155,10 +158,65 @@ INSERT INTO `notes` (`Id`, `CourseId`, `Title`, `AttachmentUrl`, `Description`, 
 
 CREATE TABLE `note_comments` (
   `Id` int(11) NOT NULL,
+  `NoteId` int(11) NOT NULL,
   `UserId` int(11) NOT NULL,
   `Text` varchar(256) NOT NULL,
   `CreatedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `note_comments`
+--
+
+INSERT INTO `note_comments` (`Id`, `NoteId`, `UserId`, `Text`, `CreatedAt`) VALUES
+(1, 32, 1, 'a', '2026-04-09 20:38:33'),
+(2, 12, 1, 'Arduinoa', '2026-04-09 20:48:28'),
+(3, 12, 1, 's', '2026-04-09 20:50:24'),
+(4, 12, 1, 'x', '2026-04-09 20:52:18'),
+(5, 12, 1, '1', '2026-04-09 20:53:15'),
+(6, 12, 1, '2', '2026-04-09 20:53:17'),
+(7, 32, 1, 'v', '2026-04-09 20:54:09'),
+(8, 32, 1, 'Mester', '2026-04-09 20:54:14'),
+(9, 19, 1, 'Integetnek', '2026-04-09 20:54:26'),
+(10, 32, 1, 'xd', '2026-04-09 20:59:50'),
+(11, 32, 1, 'asd', '2026-04-09 20:59:52'),
+(12, 32, 1, 'sad', '2026-04-09 20:59:55'),
+(13, 32, 1, 'asd', '2026-04-09 20:59:56'),
+(14, 32, 1, 'a', '2026-04-09 20:59:57'),
+(15, 32, 1, 'a2', '2026-04-09 21:00:47'),
+(16, 32, 1, 'a', '2026-04-09 21:08:54'),
+(17, 1, 1, 'bv', '2026-04-09 22:43:55'),
+(18, 9, 1, 'Első komment', '2026-04-13 21:28:47'),
+(19, 33, 1, 'Hi', '2026-04-15 17:05:07'),
+(20, 33, 1, 'aa', '2026-04-15 17:05:53'),
+(21, 1, 1, 'x', '2026-04-15 17:06:08'),
+(22, 33, 1, 'a', '2026-04-15 17:06:41'),
+(23, 33, 1, '123', '2026-04-15 17:08:07'),
+(24, 33, 1, 'asd', '2026-04-15 17:28:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `note_likes`
+--
+
+CREATE TABLE `note_likes` (
+  `Id` int(11) NOT NULL,
+  `NoteId` int(11) NOT NULL,
+  `UserId` int(11) NOT NULL,
+  `Date` int(11) NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `note_likes`
+--
+
+INSERT INTO `note_likes` (`Id`, `NoteId`, `UserId`, `Date`) VALUES
+(8, 32, 1, 2147483647),
+(9, 13, 1, 2147483647),
+(10, 12, 1, 2147483647),
+(11, 27, 1, 2147483647),
+(12, 32, 2, 2147483647);
 
 -- --------------------------------------------------------
 
@@ -172,6 +230,14 @@ CREATE TABLE `sessions` (
   `Token` varchar(64) NOT NULL,
   `Date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`Id`, `UserId`, `Token`, `Date`) VALUES
+(27, 2, 'd1cd63ace952b2ebd26437755ce1259064ddabd7b85dac0fb2f884b6091407e3', '2026-04-09 23:18:45'),
+(29, 1, 'a6574a60c0178a2191ee60fb2cb9a83cec7ae531f56fddaad63f2b5433403c6a', '2026-04-13 21:19:40');
 
 -- --------------------------------------------------------
 
@@ -210,6 +276,7 @@ CREATE TABLE `users` (
   `AvatarURL` varchar(64) NOT NULL DEFAULT 'DefaultAvatar.svg',
   `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
   `LastLogin` datetime DEFAULT NULL,
+  `GoogleID` varchar(128) DEFAULT NULL,
   `IsAdmin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -217,12 +284,14 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`Id`, `Nickname`, `Email`, `Password`, `AvatarURL`, `CreatedAt`, `LastLogin`, `IsAdmin`) VALUES
-(1, 'szabi', 'szabi@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, 0),
-(2, 'anna', 'anna@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, 0),
-(3, 'peter', 'peter@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, 0),
-(4, 'dani', 'dani@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, 0),
-(5, 'kata', 'kata@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, 0);
+INSERT INTO `users` (`Id`, `Nickname`, `Email`, `Password`, `AvatarURL`, `CreatedAt`, `LastLogin`, `GoogleID`, `IsAdmin`) VALUES
+(1, 'szabi', 'szabi@gmail.com', '$2a$12$gA2oScpY/ey2D0p7c980m.gcEsB5jYsKP1mWVqhPUv4tIZBpLfYt.', 'DefaultAvatar.svg', '2026-01-30 00:37:11', '2026-04-15 17:35:52', NULL, 0),
+(2, 'anna', 'anna@gmail.com', '$2a$12$gA2oScpY/ey2D0p7c980m.gcEsB5jYsKP1mWVqhPUv4tIZBpLfYt.', 'DefaultAvatar.svg', '2026-01-30 00:37:11', '2026-04-09 23:18:45', NULL, 0),
+(3, 'peter', 'peter@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, NULL, 0),
+(4, 'dani', 'dani@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, NULL, 0),
+(5, 'kata', 'kata@gmail.com', '$2a$12$aw4.RSz2gejA2qj0A.AAA.kY9iTU6HM2evaG2dHvJ98jJ28zPLvnO\n\n\n', 'DefaultAvatar.svg', '2026-01-30 00:37:11', NULL, NULL, 0),
+(10, 'Ember', 'for.supercell2024@gmail.com', '$2b$10$IoImzQh01NzHAovVNzOMuepUttRU2PoljN8/4.0nBbeJp28yy7opa', 'DefaultAvatar.svg', '2026-04-15 18:45:31', '2026-04-15 18:55:00', '107942955463752200601', 0),
+(11, 'Kekenj Sabolc', 'kekenj.sabolc@gmail.com', '$2b$10$hOA3r1m0qo8eJjS6Vv88turrZAPaW41VcsxxW4EIGoQ5yZy0J9HBi', 'DefaultAvatar.svg', '2026-04-15 18:48:14', '2026-04-15 18:54:29', '107734500374465909179', 0);
 
 --
 -- Indexes for dumped tables
@@ -256,6 +325,12 @@ ALTER TABLE `notes`
 ALTER TABLE `note_comments`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `NOTE_COMMENTS_USERID_TO_USERS_ID` (`UserId`) USING BTREE;
+
+--
+-- Indexes for table `note_likes`
+--
+ALTER TABLE `note_likes`
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Indexes for table `sessions`
@@ -299,19 +374,25 @@ ALTER TABLE `faculties`
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `note_comments`
 --
 ALTER TABLE `note_comments`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `note_likes`
+--
+ALTER TABLE `note_likes`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `universities`
@@ -323,7 +404,7 @@ ALTER TABLE `universities`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
