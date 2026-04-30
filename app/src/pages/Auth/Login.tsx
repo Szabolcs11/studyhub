@@ -66,7 +66,7 @@ function Login() {
       <div className="auth-header">
         <div className="auth-logo">SH</div>
         <h1 className="auth-title">Üdv újra!</h1>
-        <p className="auth-subtitle">Jelentkezz be a StudyHub fiókodba</p>
+        <p className="auth-subtitle">Jelentkezz be a Study Hub fiókodba</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>

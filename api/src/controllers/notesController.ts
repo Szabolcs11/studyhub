@@ -31,8 +31,11 @@ export const createNote = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const { Title, AttachmentUrl, Description } = req.body;
     const token = req.cookies?.sessiontoken;
+
     if (!token) return returnError(res, responses.You_Need_To_Login_To_Use_This_Function, language);
+
     const noteId = await notesService.create(Title, AttachmentUrl, Description, token, id);
+
     return res.status(200).json({
       success: true,
       message: responses.Successfully_Created_Note[language],

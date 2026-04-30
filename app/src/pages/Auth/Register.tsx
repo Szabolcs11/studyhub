@@ -67,7 +67,7 @@ function Register() {
     <div className="auth-container">
       <div className="auth-header">
         <div className="auth-logo">SH</div>
-        <h1 className="auth-title">Csatlakozz a StudyHubhoz!</h1>
+        <h1 className="auth-title">Csatlakozz a Study Hubhoz!</h1>
         <p className="auth-subtitle">Hozd létre a fiókod és kezdj el tanulni</p>
       </div>
 

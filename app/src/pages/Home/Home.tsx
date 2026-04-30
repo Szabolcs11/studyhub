@@ -124,7 +124,7 @@ function Home() {
   return (
     <div className="home-container">
       <div className="feed-header">
-        <h1>StudyHub Feed</h1>
+        <h1>Study Hub Feed</h1>
         <p>Fedezd fel a legfrissebb jegyzeteket a közösségtől!</p>
       </div>
 

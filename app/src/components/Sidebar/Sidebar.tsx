@@ -106,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="sidebar-header">
           <Link to="/" className="sidebar-logo">
             <div className="sidebar-logo-icon">SH</div>
-            <span className="sidebar-logo-text">StudyHub</span>
+            <span className="sidebar-logo-text">Study Hub</span>
           </Link>
         </div>
 

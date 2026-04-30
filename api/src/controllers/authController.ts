@@ -95,15 +95,11 @@ export const changePassword = async (req: Request, res: Response) => {
 
   if (NewPassword !== NewPasswordConfirm) return returnError(res, responses.Passwords_Do_Not_Match, language);
 
-  if (!token) {
-    return returnError(res, responses.You_Are_Not_Logged_In, language);
-  }
+  if (!token) return returnError(res, responses.You_Are_Not_Logged_In, language);
 
   const user = await getUserBySessionToken(token);
 
-  if (!user) {
-    return returnError(res, responses.You_Are_Not_Logged_In, language);
-  }
+  if (!user) return returnError(res, responses.You_Are_Not_Logged_In, language);
 
   const isCorrectPassword = await checkPassword(user.Id, CurrentPassword);
   if (!isCorrectPassword) return returnError(res, responses.Invalid_Password, language);
@@ -122,8 +118,6 @@ export const googleLogin = async (req: Request, res: Response) => {
   const language = (req.headers.language as language) || "hu";
   if (!token) return returnError(res, responses.Fill_The_Fields, language);
 
-  console.log("process.env.GOOGLE_CLIENT_ID");
-  console.log(process.env.GOOGLE_CLIENT_ID);
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
   const ticket = await client.verifyIdToken({
