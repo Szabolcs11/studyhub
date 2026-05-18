@@ -39,4 +39,8 @@ export const notesService = {
     if (!user) throw new Error("Invalid_Cookie");
     return await noteQuerry.editWhereId(id, title, attachmentUrl, description);
   },
+
+  async deleteFile(fileName: string) {
+    return await noteQuerry.deleteFile(fileName);
+  },
 };

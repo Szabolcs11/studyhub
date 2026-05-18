@@ -60,6 +60,12 @@ export const deleteNote = async (req: Request, res: Response) => {
     const user = await userQueries.findByToken(token);
     if (!user) return returnError(res, responses.You_Need_To_Login_To_Use_This_Function, language);
     if (user.Id !== note.UploaderUserId) return returnError(res, responses.Forbidden, language);
+    if (note.AttachmentUrl) {
+      const fileName = note.AttachmentUrl.split("/").pop();
+      if (fileName) {
+        await notesService.deleteFile(fileName);
+      }
+    }
     const success = await notesService.delete(id);
     if (success) {
       return res.status(200).json({

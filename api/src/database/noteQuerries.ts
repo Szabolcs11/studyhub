@@ -3,6 +3,8 @@ import { Note } from "./../types/";
 import { coursesQuerry } from "./coursesQuerries";
 import { facultyQuerry } from "./facultyQueries";
 import { pool } from "./mysql";
+import fs from "fs";
+import path from "path";
 
 export const noteQuerry = {
   async getAll(userId: number): Promise<any[]> {
@@ -157,5 +159,20 @@ ORDER BY notes.CreatedAt DESC;
   async isLikedByUser(noteId: number, userId: number): Promise<boolean> {
     const [rows] = await pool.query(`SELECT 1 FROM note_likes WHERE NoteId = ? AND UserId = ?`, [noteId, userId]);
     return (rows as any).length > 0;
+  },
+
+  async deleteFile(fileName: string): Promise<void> {
+    const filePath = path.join(__dirname, "../..", "public/uploads", fileName);
+
+    try {
+      await fs.promises.unlink(filePath);
+      console.log(`Deleted: ${filePath}`);
+    } catch (err: any) {
+      if (err.code === "ENOENT") {
+        console.warn(`File not found: ${filePath}`);
+      } else {
+        console.error(`Error deleting file ${filePath}:`, err);
+      }
+    }
   },
 };
