@@ -84,6 +84,9 @@ export const editNode = async (req: Request, res: Response) => {
     if (!note) {
       return returnError(res, responses.Invalid_Id, language);
     }
+    const user = await userQueries.findByToken(token);
+    if (!user) return returnError(res, responses.You_Need_To_Login_To_Use_This_Function, language);
+    if (user.Id !== note.UploaderUserId) return returnError(res, responses.Forbidden, language);
     const success = await notesService.edit(id, Title, AttachmentUrl, Description, token);
     if (success) {
       return res.status(200).json({
