@@ -4,7 +4,7 @@ import CreateNoteModal from "./Components/CreateNoteModal";
 import { navigator } from "../../navigator";
 import { PATHS } from "../../navigator/Routes";
 
-function Course() {
+function Course({ userId }: { userId: number }) {
   const {
     course,
     faculty,
@@ -148,11 +148,14 @@ function Course() {
                 >
                   <div className="note-header">
                     <h3 className="note-title">{note.Title}</h3>
-                    {isAuthenticated && (
+                    {isAuthenticated && note.UploaderUserId == userId && (
                       <div className="note-actions">
                         <button
                           className="note-action-button delete"
-                          onClick={() => handleDeleteNote(note.Id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteNote(note.Id);
+                          }}
                           title="Jegyzet törlése"
                         >
                           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

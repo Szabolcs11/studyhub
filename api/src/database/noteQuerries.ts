@@ -1,8 +1,8 @@
 import { ResultSetHeader } from "mysql2";
-import { Faculty, Note } from "./../types/";
-import { pool } from "./mysql";
-import { facultyQuerry } from "./facultyQueries";
+import { Note } from "./../types/";
 import { coursesQuerry } from "./coursesQuerries";
+import { facultyQuerry } from "./facultyQueries";
+import { pool } from "./mysql";
 
 export const noteQuerry = {
   async getAll(userId: number): Promise<any[]> {
@@ -74,7 +74,7 @@ ORDER BY notes.CreatedAt DESC;
     return data;
   },
 
-  async getById(id: number, userId: number): Promise<Faculty | null> {
+  async getById(id: number, userId: number): Promise<Note | null> {
     const [rows] = await pool.query(
       `
   SELECT 
@@ -99,7 +99,7 @@ ORDER BY notes.CreatedAt DESC;
   `,
       [userId, id],
     );
-    const result = rows as Faculty[];
+    const result = rows as Note[];
     return result.length > 0 ? result[0] : null;
   },
 

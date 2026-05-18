@@ -67,7 +67,7 @@ function index() {
       <Route element={<Layout isAuthenticated={!!user} />}>
         <Route path={PATHS.HOME} element={<Home />} />
         <Route path={PATHS.COURSES} element={<Courses />} />
-        <Route path={PATHS.COURSES + ":id"} element={<Course />} />
+        <Route path={PATHS.COURSES + ":id"} element={<Course userId={(user as User).Id} />} />
         <Route path={PATHS.NOTES + ":id"} element={<NotePage />} />
         <Route path={PATHS.SETTINGS} element={<Settings user={user as User} />} />
       </Route>

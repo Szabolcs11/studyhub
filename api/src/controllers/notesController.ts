@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
+import { userQueries } from "../database/userQueries";
 import responses from "../responses/errorResponses.json";
 import { notesService } from "../services/notesService";
-import { returnError } from "../utils";
 import { language } from "../types";
+import { returnError } from "../utils";
 
 export const getNotes = async (req: Request, res: Response) => {
   try {
@@ -50,10 +51,15 @@ export const deleteNote = async (req: Request, res: Response) => {
   try {
     const language = (req.headers.language as language) || "hu";
     const id = Number(req.params.id);
+    const token = req.cookies?.sessiontoken;
+    if (!token) return returnError(res, responses.You_Need_To_Login_To_Use_This_Function, language);
     const note = await notesService.getNote(id);
     if (!note) {
       return returnError(res, responses.Invalid_Id, language);
     }
+    const user = await userQueries.findByToken(token);
+    if (!user) return returnError(res, responses.You_Need_To_Login_To_Use_This_Function, language);
+    if (user.Id !== note.UploaderUserId) return returnError(res, responses.Forbidden, language);
     const success = await notesService.delete(id);
     if (success) {
       return res.status(200).json({
@@ -61,7 +67,8 @@ export const deleteNote = async (req: Request, res: Response) => {
         message: responses.Successfully_Deleted_Note[language],
       });
     }
-  } catch {
+  } catch (err) {
+    console.log(err);
     return returnError(res, responses.Unexpected_Error, "hu");
   }
 };
